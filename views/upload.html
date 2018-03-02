@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Upload</title>
+	<!-- Css files -->
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<!-- Generic page styles -->
+	<link rel="stylesheet" href="css/upload/style.css">
+	<!-- blueimp Gallery styles -->
+	<!--<link rel="stylesheet" href="http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css">-->
+	<link rel="stylesheet" href="css/upload/blueimp-gallery.min.css">
+	<!-- CSS to style the file input field as button and adjust the Bootstrap progress bars -->
+	<link rel="stylesheet" href="css/upload/jquery.fileupload.css">
+	<link rel="stylesheet" href="css/upload/jquery.fileupload-ui.css">
+	<!-- CSS adjustments for browsers with JavaScript disabled -->
+	<noscript>
+		<link rel="stylesheet" href="css/upload/jquery.fileupload-noscript.css">
+	</noscript>
+	<noscript>
+		<link rel="stylesheet" href="css/upload/jquery.fileupload-ui-noscript.css">
+	</noscript>
+</head>
+
+<style>
+	
+	body{padding:10px;padding-top:0px;}
+    
+	/* .fileupload-buttonbar{position:fixed;padding-top:10px;height:50px;background:#fff;width:100%;border-bottom: 1px solid #e7e7e7;}  */
+	.upload-td-prev{width: 100px;}
+	.upload-td-name{width:-webkit-calc(50% );
+                    width:-moz-calc(50%);
+					width:calc(50% );
+					display:block;
+					float:left
+				   }
+
+	.upload-td-proc{width:-webkit-calc(30%);
+                    width:-moz-calc(30%);
+					width:calc(30%);
+					display:block;
+					float:left
+				   }
+	.upload-td-icon{
+		            width:-webkit-calc(20%);
+                    width:-moz-calc(20%);
+					width:calc(20%);
+					display:block;
+					float:left
+				   }
+	.upload-td-name p{
+		         max-width: 500px;
+				 word-wrap: break-word;
+				 overflow : hidden;
+				 text-overflow: ellipsis;
+				 display: -webkit-box;
+				 -webkit-line-clamp:3;
+				 -webkit-box-orient: vertical;}
+	
+    .upload-td-prev .preview{width:75px}
+
+	body::-webkit-scrollbar {
+	width:10px;
+	height:10px;
+	}
+	body::-webkit-scrollbar-button    {
+   
+	}
+	body::-webkit-scrollbar-track     {
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	border-radius: 10px; 
+	background:#f0f0f0;
+	}
+	body::-webkit-scrollbar-track-piece {
+	border-radius: 10px; 
+	background:#f0f0f0;
+	}
+	body::-webkit-scrollbar-thumb{
+	  border-radius: 10px;
+	  -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+	  background: #428bca;;
+	}
+	body::-webkit-scrollbar-corner {
+	background:#fff;
+	}
+	body::-webkit-scrollbar-resizer  {
+	background:#f0f0f0;
+	}
+
+
+/* 媒体查询隐藏上传框的 */
+    @media screen and (max-width: 300px) {
+	 .upload-td-name {
+        display:none;
+    }
+}
+
+  
+  </style>
+
+<body>
+
+	<div>
+	<!-- The file upload form used as target for the file upload widget -->
+		<form id="fileupload" style='width:100%' method="POST" enctype="multipart/form-data">
+			<!-- Redirect browsers with JavaScript disabled to the origin page -->
+			<noscript>
+				<input type="hidden" name="redirect" value="">
+			</noscript>
+			<!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+			<div style='display:none' class="row fileupload-buttonbar">
+				<div class="col-lg-7">
+					<!-- The fileinput-button span is used to style the file input field as button -->
+					<span class="btn btn-success fileinput-button">
+						<i class="glyphicon glyphicon-plus"></i>
+						<span>
+							<%= lang.addFiles %>
+						</span>
+						<input id='inputBtn' type="file" name="files" multiple>
+					</span>
+
+					<!--多个上传 -->
+					<!--		<span class="btn btn-success fileinput-button">
+						<i class="glyphicon glyphicon-plus"></i>
+						<span>Add files...(Multiple)</span>
+						<input type="file" name="photos" multiple>
+					</span>
+                    -->
+				
+					<!-- The global file processing state -->
+					<span class="fileupload-process"></span>
+				</div>
+				<!-- The global progress state -->
+				<div class="col-lg-5 fileupload-progress fade">
+					<!-- The global progress bar -->
+					<div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+						<div class="progress-bar progress-bar-success" style="width:0%;"></div>
+					</div>
+					<!-- The extended global progress state -->
+					<div class="progress-extended">&nbsp;</div>
+				</div>
+			</div>
+			<!-- The table listing the files available for upload/download -->
+			<table role="presentation" class="table table-striped">
+				<tbody class="files"></tbody>
+			</table>
+		</form>
+
+
+		<br>
+	</div>
+
+	<!-- The template to display files available for upload -->
+	<!--显示可上载文件的模板 -->
+	<script id="template-upload" type="text/x-tmpl">
+	{% for (var i=0, file; file=o.files[i]; i++) { %}
+		<tr class="template-upload fade">
+			<td class='upload-td-prev'>
+				<span class="preview"></span>
+			</td>
+			<td class='upload-td-name'>
+				<p class="name">{%=file.newName%}</p>
+				<strong class="error text-danger"></strong>
+			</td>
+			<td class='upload-td-proc'>
+				<p class="size">Processing...</p>
+				<div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+			</td>
+			<td class='upload-td-icon'>
+				{% if (!i && !o.options.autoUpload) { %}
+					<button class="btn btn-primary start" disabled>
+						<i class="glyphicon glyphicon-upload"></i>
+						<span>Start</span>
+					</button>
+				{% } %}
+				{% if (!i) { %}
+					<button class="btn btn-warning cancel">
+						<i class="glyphicon glyphicon-ban-circle"></i>
+						<span><%= lang.cancel %></span>
+					</button>
+				{% } %}
+			</td>
+		</tr>
+	{% } %}
+	</script>
+	<!-- The template to display files available for download -->
+	<!-- 模板来显示文件可供下载 -->
+	<script id="template-download" type="text/x-tmpl">
+	{% for (var i=0, file; file=o.files[i]; i++) { %}
+	{% if (file.repetition == false) { %}
+		<tr class="template-download fade">
+			<td class='upload-td-prev'>
+				<span class="preview">
+						{% if (file.mimetype.indexOf("image")>=0) { %}
+							<a title="{%=file.newName%}" data-gallery><img style='max-height:80px;max-width:80px'  src=file/thumbnail/{%=file.id%}></a>
+						{% } %}
+						{% if (file.mimetype.indexOf("video")>=0) { %}
+							<a title="{%=file.newName%}" data-gallery><img style='max-height:80px;max-width:80px' src=images/video.png></a>
+						{% } %}
+						{% if (file.mimetype.indexOf("audio")>=0) { %}
+						    <a title="{%=file.newName%}" data-gallery><img style='max-height:80px;max-width:80px'  src=images/audio.png></a>
+					    {% } %}
+				</span>
+			</td>
+			<td class='upload-td-name'>
+				<p class="name">
+					{% if (file.url) { %}
+						<a title="{%=file.newName%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.newName%}</a>
+					{% } else { %}
+						<span>{%=file.newName%}</span>
+					{% } %}
+				</p>
+				{% if (file.error) { %}
+					<div><span class="label label-danger"><%= lang.error %></span> {%=file.error%}</div>
+				{% } %}
+			</td>
+			<td class='upload-td-proc'>
+				<span class="size">{%=o.formatFileSize(file.size)%}</span>
+				<div><span style='color: #40b882;font-weight: 700'>Upload success</span></div>
+				
+			</td>
+			<td class='upload-td-icon'>
+					<button onclick='deleteFile(this)' class="btn btn-danger delete" data-id="{%=file.id%}" >
+						<i class="glyphicon glyphicon-trash"></i>
+						<span><%= lang.delete %></span>
+					</button>
+			</td>
+		</tr>
+	  {% } %}
+
+	  {% if (file.repetition == true) { %}
+	  <tr class="template-download fade">
+		  <td class='upload-td-prev'>
+			  <span class="preview">
+				  {% if (file.mimetype.indexOf("image")>=0) { %}
+					  <a title="{%=file.newName%}" data-gallery><img style='max-height:80px;max-width:80px'  src=file/thumbnail/{%=file.id%}></a>
+				  {% } %}
+				  {% if (file.mimetype.indexOf("video")>=0) { %}
+				      <a title="{%=file.newName%}" data-gallery><img style='max-height:80px;max-width:80px' src=images/video.png></a>
+				  {% } %}
+				  {% if (file.mimetype.indexOf("audio")>=0) { %}
+				      <a title="{%=file.newName%}" data-gallery><img style='max-height:80px;max-width:80px'  src=images/audio.png></a>
+			  {% } %}
+			  </span>
+		  </td>
+ 
+		  <td class='upload-td-name'>
+				<p style='width:244px;overflow:hidden;text-overflow:ellipsis'>
+						<span>{%=file.newName%}</span>
+				</p>
+		  </td>
+		  <td class='upload-td-proc'>
+				<span class="size">{%=o.formatFileSize(file.size)%}</span>
+				<div><span style='color: #a94442;font-weight: 700'>The file has been uploaded</span></div>
+			</td>
+		  <td class='upload-td-icon'>
+					<button class="btn btn-warning cancel">
+						<i class="glyphicon glyphicon-ban-circle"></i>
+						<span><%= lang.cancel %></span>
+					</button>
+		  </td>
+	  </tr>
+	{% } %}
+	{% } %}
+	</script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/layer.js"></script>
+	<script src="js/upload/vendor/jquery.ui.widget.js"></script>
+	<script src="js/upload/tmpl.min.js"></script>
+	<script src="js/upload/load-image.all.min.js"></script>
+	<script src="js/upload/canvas-to-blob.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/upload/jquery.fileupload.js"></script>
+	<script src="js/upload/jquery.fileupload-process.js"></script>
+	<script src="js/upload/jquery.fileupload-validate.js"></script>
+	<script src="js/upload/jquery.fileupload-ui.js"></script>
+	<script>
+	  var cuowu = "<%= lang.error %>";
+	  var chenggong = '<%= lang.success %>';
+	  var uploadSuccess ='<%= lang.uploadFile_success %>';
+	  var chongfu = '<%= lang.uploadFile_repeat %>';
+	  var atten ='<%= lang.attention %>';
+	  var uploadFail ='<%= lang.attention %>';
+	</script>
+	<!-- The main application script -->
+	<script src="js/upload/main.js"></script>
+	<!-- The XDomainRequest Transport is included for cross-domain file deletion for IE 8 and IE 9 -->
+	<!--[if (gte IE 8)&(lt IE 10)]>
+	<script src="js/cors/jquery.xdr-transport.js"></script>
+	<![endif]-->
+
+	<script>
+		var joggle = 'file/'+'<%- type %>';
+		function deleteFile(that) {
+						var id = $(that).data("id");
+						$.ajax({
+							url: 'file/del',
+							type: 'POST',
+							data: {id: id},
+							success: function (data) {
+								
+								$(that).parent().addClass('animated bounceOutUp');
+								setTimeout(function(){$(that).parent().css('display','none')}, 1000);
+								stateAlert("<%= lang.success %>","<%= lang.deleteFile_success %>",'success');
+								$("#reflashBtn",parent.document).click();
+								
+							},
+							error: function (data) {
+								stateAlert("<%= lang.error %>","<%= lang.deleteFile_fail %>",'danger');
+							}
+						})
+		};
+	</script>
+</body>
+
+</html>

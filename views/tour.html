@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BeacoNice - Tour</title>
+  <!-- Css files -->
+  <link href="public/css/bootstrap.min.css?q=123" rel="stylesheet">
+  <link href="public/css/font-awesome.min.css?q=123" rel="stylesheet">
+  <link href="public/css/tree-menu.css?q=123" rel="stylesheet">
+  <link href="public/css/beaconice-header.css?q=123" rel="stylesheet">
+  <script type="text/javascript" language="javascript">
+    function changeFrameHeight() {
+      var ifm = document.getElementById("cmpp_iframe");
+      var viewHeight = $(window).height()
+      ifm.height = viewHeight - 50;
+    }
+    
+    window.onresize = function () {
+      changeFrameHeight();
+    }
+  </script>
+</head>
+
+<body>
+  <header class="header">
+    <nav>
+      <a class="logo" href="/"><i class="fa fa-podcast" aria-hidden="true"></i> 
+        <span>BeacoNice Tour</span></a>
+
+      <a href="/storage/beacon/tour" target="main"><span>Beacons</span></a>
+      <a href="/storage/file?type=photo" target="main"><span>Photos</span></a>
+      <a href="/storage/file?type=video" target="main"><span> Videos</span></a>
+      <a href="/storage/file?type=audio" target="main"><span> Audio</span></a>
+    </nav>
+
+    <ul class="nav navbar-nav navbar-right">
+      <li class="sub-menu-parent">
+        <a href="#">
+          <i class="fa fa-user"></i>
+          <label class="username" style="display:inline">---</label>
+          <b class="caret"></b>
+        </a>
+
+        <ul class="sub-menu">
+          <li>
+            <a href="javascript:void(0);" id='change-password'>
+              <i class="fa fa-wrench"></i>Change Password</a>
+          </li>
+          <li class="divider"></li>
+          <li class="dropdown" id="accordion">
+            <a href="javascript:void(0);" id='lang-title'>
+              <i class="fa fa-language"></i>Language</a>
+          </li>
+          <li class="divider"></li>
+          <li>
+            <a href="javascript:void(0);" id='logout'>
+              <i class="fa fa-sign-out"></i>Logout</a>
+          </li>
+
+        </ul>
+      </li>
+    </ul>
+
+  </header>
+
+  <div class="content">
+    <!-- start: Content -->
+    <div class="main">
+      <iframe name="main" id="cmpp_iframe" class="cmpp_iframe" width="100%"  height="100%" src="/storage/beacon/tour" frameborder="0" onload="changeFrameHeight()"></iframe>
+    </div>
+    <!-- end: Content -->
+  </div>
+  <!--/container-->
+  <div class="clearfix"></div>
+  <!-- start: JavaScript-->
+  <script src="public/js/jquery.min.js?q=123"></script>
+  <script src="public/js/bootstrap.min.js?q=123"></script>
+  <script src="public/js/helper.js?q=123"></script>
+  <script src="public/js/jquery.cookie.js?q=123"></script>
+  <script src="public/js/tether.min.js?q=123"></script>
+  <script src="public/js/toastr.min.js?q=123"></script>
+  <script src="public/js/tree-menu.js?q=123"></script>
+  <script src="/statics/js/bootstrap-dialog.min.js?q=123"></script>
+
+  <!-- end: JavaScript-->
+
+  <script type="text/javascript">
+    var url; //描述url地址, config/url.json
+    var content;//页面不同语言显示的文本内容 config/lang/*.json
+    var userInfo;//用户信息
+    var key = "tour";//选中的服务模块
+    var lang; //页面选择语言
+
+    content = { dialog: {} }
+    content.dialog.title = "Logout";
+    content.dialog.message = "Logout Now";
+    content.dialog.button = "OK";
+
+    url = $.ajax({ url: 'config/url.json', dataType: "json", async: false }).responseJSON;
+
+    function showLoginTip() {
+      // cmppHelper.error(ex.error);
+        BootstrapDialog.show({
+            title: content.dialog.title,
+            message: content.dialog.message,
+            closable: false,
+            buttons: [{
+                label: content.dialog.button,
+                action: function (dialog) {
+                    location.href = url.api.login + "&s=" + key;
+                }
+            }]
+        });
+    }
+
+     // 用户信息
+    cmppHelper.get(url.api.getInfo, null,
+        function (response) {
+            cmppHelper.info(response);
+            userInfo = response;
+            $('.username').html(response.username);
+        },
+        function (ex) { //登录框登录
+            showLoginTip()
+        }
+    );
+
+
+    $('#logout').on('click', function () {
+        location.href = url.api.logout + "&s=" + key;
+    });
+  </script>
+</body>
+
+</html>

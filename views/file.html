@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Upload</title>
+    <!-- Css files -->
+    <link href="css/preview.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-editable.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/layer.css" rel="stylesheet">
+    <link href="css/animate.min.css" rel="stylesheet">
+    <link href="css/loading.css" rel="stylesheet">
+    <link href="css/BeAlert.css" rel="stylesheet">
+
+    <!-- 视图模式 -->
+    <link rel="stylesheet" type="text/css" href="css/component.css" />
+    <!-- 弹出动画 -->
+
+    <!-- 分页 -->
+    <link href="css/myPage.css" rel="stylesheet" type="text/css" />
+
+    <style>
+      body{
+        overflow-y: scroll;
+        overflow-x: hidden;; 
+        scrollbar-face-color: #889B9F;
+        scrollbar-shadow-color: #3D5054;
+        scrollbar-highlight-color: #C3D6DA;
+        scrollbar-3dlight-color: #3D5054;
+        scrollbar-darkshadow-color: #85989C;
+        scrollbar-track-color: #95A6AA;
+        scrollbar-arrow-color: #FFD6DA;
+      }
+    </style>
+
+</head>
+
+<body>
+
+    <div id="cbp-vm" class="cbp-vm-switcher cbp-vm-view-grid">
+
+        <!-- 头部 -->
+        <div class="cbp-vm-options navbar navbar-default " style="width:100%;margin-bottom:0px">
+            <!-- navbar -->
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li id='initUpload' class="active">
+                            <button class="btn btn-primary" style='background-color: #428bca;color:aliceblue;margin-top:10px;'>
+                                <span class='glyphicon glyphicon-cloud-upload'></span>
+                                <%= lang.addFiles %>
+                            </button>
+                        </li>
+
+                        <li>
+                            <button id="reflashBtn" class="btn btn-default" style='color: #428bca;background-color:aliceblue;margin-top:10px;margin-left:20px;'
+                                onclick="initData()" data-fr='1'>
+                                <span class='glyphicon glyphicon-refresh'></span>
+                                <%= lang.refresh %>
+                        </li>
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="active">
+                            <a href="#" class="cbp-vm-icon cbp-vm-grid cbp-vm-selected" onclick="toggle_switch(this)" data-view="cbp-vm-view-grid">
+                                <i class="fa fa-th-large"></i>
+                                <%= lang.grid %>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="cbp-vm-icon cbp-vm-list" onclick="toggle_switch(this)" data-view="cbp-vm-view-list">
+                                <i class="fa fa-list"></i>
+                                <%= lang.list %>
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                            <span class="dropdown-toggle" data-toggle="dropdown" role="button" style="padding:15px;position: relative;display: block">
+                                <i class="fa fa-sort-amount-asc"></i>
+                                <span class="caret"></span>
+                            </span>
+                            <ul style='line-height:25px;padding-left:10px;width:110px;min-width:100px;' class="dropdown-menu" role="menu">
+                                <li onclick="initData(3)" style='cursor:pointer'>
+                                    <span>
+                                        <i class="fa fa-check-square-o" style="margin-right:10px;"></i>
+                                        <%= lang.filetime %>
+                                    </span>
+                                </li>
+                                <li onclick="initData(2)" style='cursor:pointer'>
+                                    <span>
+                                        <i class="fa fa-check-square-o" style="margin-right:10px;visibility:hidden;"></i>
+                                        <%= lang.filesize %>
+                                    </span>
+                                </li>
+                                <li onclick="initData(1)" style='cursor:pointer'>
+                                    <span>
+                                        <i class="fa fa-check-square-o" style="margin-right:10px;visibility:hidden;"></i>
+                                        <%= lang.filename %>
+                                    </span>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <form class="navbar-form navbar-right" style="display:none;">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- 列表内容 -->
+        <div class='thead'>
+            <ul>                      
+                <li id='th-li0'></li>
+                <li onclick="initData(1)" id='th-li1'>
+                    <b><%= lang.filename %></b>
+                    <span class="glyphicon glyphicon-triangle-bottom" style="margin-left:5px;visibility:hidden"></span>
+                </li>
+                <li onclick="initData(2)" id='th-li2'>
+                    <b><%= lang.filesize %></b>
+                    <span class="glyphicon glyphicon-triangle-bottom" style="margin-left:5px;visibility:hidden"></span>
+                </li>
+                <li onclick="initData(3)" id='th-li3'>
+                    <b><%= lang.filetime %></b>
+                    <span class="glyphicon glyphicon-triangle-bottom" style="margin-left:5px;"></span>
+                </li>
+                <li id='th-li4'>
+                    <b><%= lang.filesource %></b>
+                </li>
+            </ul>
+        </div>
+        <ul id='listNew' class="list">
+            <!-- 表格头 -->
+            <!-- 加载内容 -->
+        </ul>
+        <!-- 加载动画 -->
+        <div class="loading-3" id="loading">
+            <i></i><i></i><i></i><i></i>
+            <i></i><i></i><i></i><i></i>
+        </div>
+
+        <!-- 页码 -->
+
+       <div style="display:none;height:50px;width:100%;clear:none;float:left;padding-top:10px" id="paginationDiv" class="container-fluid">
+            <form style="margin:auto" id="form1" runat="server">
+                <ul class="pagination" style='margin:0px;' id="pagination"></ul>
+                <input type="hidden" id="PageCount" runat="server" />
+                <input type="hidden" id="PageSize" runat="server" value="5" />
+                <input type="hidden" id="countindex" runat="server" value="5" />
+                <!--设置最多显示的页码数 可以手动设置 默认为7-->
+                <input type="hidden" id="visiblePages" runat="server" value='5' />
+            </form>
+        </div> 
+
+        <!-- 文件选择列表 -->
+        <div class="modal-content" id="url-list-box" style="position:fixed;top:100px;left:50%;margin-left:-150px;width:300px;max-height:500px;display:none">
+            <div class="modal-header">
+                <button type="button" onclick="checkSelete()" class="close" data-dismiss="modal" aria-label="Close"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <%= lang.selectFile %>
+            </div>
+            <div class="modal-body" style="max-height:380px;overflow-x:hidden">
+    
+                    <ul class="list-group" id="url-list"></ul>
+                    　　　　　　　　　　　　　　　　　　
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="checkSelete()" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span><%= lang.cancel %></button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div id='img-box' style='max-width:70%;text-align:center;padding:50px;margin:auto'>
+                    <img style='max-width:100%;margin:auto' />
+                </div>
+                <div id='video-box'>
+                    <video style='max-width:100%;margin:auto;width:600px' controls="controls" controlsList="nodownload"></video>
+                </div>
+                <div id='audio-box'>
+                    <div style='width:600px;height:300px;text-align:center'><img style='margin-top:50px' src='images/music.png'/></div>
+                    <audio style='max-width:100%;margin:auto;width:600px' controls="controls" controlsList="nodownload"></audio>
+                </div>
+            </div>
+            <div style='text-align:center;width:100%;padding-top:30px'><a id='downFile' download="" href=''><i style='font-size:80px;color:#ffffff;text-align:center' class='glyphicon glyphicon-download-alt'></i></a></div>            
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal -->
+    </div>
+
+    <div class="uploadDiv">
+        <div class='tabIcon'>
+            <span>
+                <span class='uploadMsg'></span>
+            </span>
+            <span id='close' class='glyphicon glyphicon-remove'></span>
+            <span id='full' class='glyphicon glyphicon-unchecked'></span>
+            <span id='zoom' class='glyphicon glyphicon-minus'></span>
+        </div>
+        <iframe name="upload" id="uploadIf" width="auto" height="auto" src="upload?type=<%- type %>" frameborder="0"></iframe>
+    </div>
+
+   <!-- 重命名模态框 -->
+    <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form  id = 'renameSub'>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group input-group-md">
+                                <input class="form-control" id="formDataParams" name = "params" type="text" placeholder="Twitterhandle">
+                                <input class="form-control" id="formDataId" name = "id" style="display:none" type="text" placeholder="Twitterhandle">
+                                <span class="input-group-btn">
+                                        <button id='renameSubBtn' type="button" class="btn btn-primary"><%= lang.submit %></button>
+                                </span>
+                        </div>
+                    </div>
+                </div><!-- /.modal-content -->
+            </form>     
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div id='myAlert' style='position:fixed;left:10px;bottom:10px;display:none' class='alert alert-success'>
+            <a href='#' class='close' data-dismiss='alert'>&times;</a>
+            <strong id='myState'></strong><span style="padding-left:10px;padding-right:10px" id='myMassage'></span>
+   </div>
+
+
+    <!-- start: JavaScript-->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-editable.min.js"></script>
+    <script src="js/jqPaginator.min.js" type="text/javascript"></script>
+
+    <!-- 视图模式js -->
+    <script src="js/modernizr.custom.js"></script>
+    <script src="js/classie.js"></script>
+    <script src="js/cbpViewModeSwitch.js"></script>
+    <script src="js/BeAlert.js"></script>
+    <!-- end: JavaScript-->
+</body>
+<script type="text/javascript">
+    var frWidth = $(window).width() - 40;                     //获取窗口宽度--去掉两个边距40px
+    var frHeight = $(window).height() - 144;                   //获取窗口高度--去上下个边距40px  上下两个头脚104px
+    var wCont = parseInt(frWidth / 192);                    //计算宽能放的数量
+    var hCont = parseInt(frHeight / 202)+2;                   //计算高能放的数量
+    var maxResult = wCont * hCont;
+    
+    var mimeType = '<%- type %>';
+    console.log(mimeType)                             //选择要加载的页面  --all、photo、audio、video?
+    var ti = 1; var si = 1; var na = 1;
+    initData(3);
+    function initData(that) {
+        $('#listNew').html(' ');
+        if (that)
+        {
+            switch (that) {
+            case 1:
+                ti++;
+                var orderBy = "newName"
+                var order   = (ti % 2 == 0) ? 'ASC' : 'DESC';
+
+                (ti % 2 == 0) ?  $('.thead ul > li span').eq(0).removeClass("glyphicon-triangle-top").addClass("glyphicon-triangle-bottom") : $('.thead ul > li span').eq(0).removeClass("glyphicon-triangle-bottom").addClass("glyphicon-triangle-top");
+                $(".dropdown-menu > li span i").css("visibility","hidden");
+                $(".dropdown-menu > li span i").eq(2).css("visibility","visible");
+                $('.thead ul > li span').css("visibility","hidden");
+                $('.thead ul > li span').eq(0).css("visibility","visible");
+                break;
+            case 2:
+                si++;
+                var orderBy = "size"
+                var order   = (si % 2 == 0) ? 'ASC' : 'DESC';
+
+                (si % 2 == 0) ?  $('.thead ul > li span').eq(1).removeClass("glyphicon-triangle-top").addClass("glyphicon-triangle-bottom") : $('.thead ul > li span').eq(1).removeClass("glyphicon-triangle-bottom").addClass("glyphicon-triangle-top");
+                $(".dropdown-menu > li span i").css("visibility","hidden");
+                $(".dropdown-menu > li span i").eq(1).css("visibility","visible");
+                $('.thead ul > li span').css("visibility","hidden");
+                $('.thead ul > li span').eq(1).css("visibility","visible");
+                break;
+            case 3:
+                na++;
+                var orderBy = "time";
+                var order   = (na % 2 == 0) ? 'DESC' : 'ASC';
+                 
+                (na % 2 == 0) ?  $('.thead ul > li span').eq(2).removeClass("glyphicon-triangle-top").addClass("glyphicon-triangle-bottom") : $('.thead ul > li span').eq(2).removeClass("glyphicon-triangle-bottom").addClass("glyphicon-triangle-top");
+                $(".dropdown-menu > li span i").css("visibility","hidden");
+                $(".dropdown-menu > li span i").eq(0).css("visibility","visible");
+                $('.thead ul > li span').css("visibility","hidden");
+                $('.thead ul > li span').eq(2).css("visibility","visible");
+                break;
+            default:
+                na++;
+                break;
+            };
+            document.cookie="order="+order;
+            document.cookie="orderBy="+orderBy;
+        };
+        
+        var cookireObj = {};
+        var arrCookie = document.cookie.split('; '); 
+        
+        arrCookie.forEach(function(item){
+            if(item.indexOf('order=')>=0)
+            { cookireObj.order = item.split('=')[1]}
+            if(item.indexOf('orderBy')>=0)
+            { cookireObj.orderBy = item.split('=')[1]}
+        });
+
+        //同步设置页数
+        $.ajax({
+            url: 'file/fileArr',
+            type: 'GET',
+            async: false,
+            data: {mimeType: mimeType},
+            success: function (data) {
+                var countindex = Math.ceil(data.data.total / maxResult).toString();
+                $("#countindex").val(countindex);
+                if(data.data.total!=0){
+                $.jqPaginator('#pagination', {
+                    totalPages: parseInt($("#countindex").val()),
+                    visiblePages: parseInt($("#visiblePages").val()),
+                    first: '<li class="first"><a href="javascript:;"><%= lang.first %></a></li>',
+                    prev: '<li class="prev"><a href="javascript:;"><i class="arrow arrow2"></i><%= lang.prev %></a></li>',
+                    next: '<li id="btnNext" class="next"><a href="javascript:;"><%= lang.next %><i class="arrow arrow3"></i></a></li>',
+                    last: '<li class="last"><a href="javascript:;"><%= lang.last %></a></li>',
+                    page: '<li class="page"><a href="javascript:;">{{page}}</a></li>',
+                    onPageChange: function (startIndex, type) {
+                        //$('#listNew').html(' ');                                                  //  清空上次内容,每次刷新
+                        $('#loading').show();                                                       //  动画显示出来，内容没加载出来时
+                        $('#form1').width($('.pagination').width() + 50);                           //  页码组建宽度重计算
+                        $.ajax({
+                            url: 'file/list',
+                            type: 'GET',
+                            data: { startIndex: startIndex, maxResult: maxResult, orderBy: orderBy, order: order, mimeType: mimeType, cookireObj:cookireObj, tour_lib: "1"},
+                            success: function (data) {
+                                $("#countindex").val(Math.ceil(data.data[0].length / maxResult));      //  计算页数
+                                for (var i = 0; i < data.data[0].length; i++) {
+                                    var imgSize  = bytesToSize(data.data[0][i].size);      //  单位换算
+                                    var mimetype = data.data[0][i].mimetype;
+                                    var id       = data.data[0][i].id;
+                                    var newName  = data.data[0][i].newName;
+                                    var time     = data.data[0][i].time;
+                                    var owner   = data.data[0][i].owner;
+                                    var duration = data.data[0][i].duration;
+                                    var fileUrl  = '/storage' + data.data[0][i].fileUrl;
+                                    var file_suffix ;
+                                    
+                                    if(mimetype.indexOf("image")>=0)
+                                    {   file_suffix = '.jpg';
+                                        $('#listNew').append("<li><div class='cbp-vm-checkbox' style='float:left;line-height:60px'><input class='checkbix checkedbox' id='mycheckbox5' type='checkbox' data-id =" + id + " data-mimetype =" + mimetype + " data-name = " + newName +" data-color='blue' data-text='Blue'></div><a class='cbp-vm-image' href='#' data-id =" + id + " data-mimetype =" + mimetype + " data-toggle='modal' data-target='#myModal'><img src='" + fileUrl + "'></a><p data-id =" + id + " class='cbp-vm-title filename'><a class='newName'   data-id =" + id + " style='display:block;overflow:hidden;text-overflow:ellipsis;border-bottom:none;cursor:pointer;height:60px;color:inherit'>" + newName + "</a></p><div class='cbp-vm-price'>" + imgSize + " </div><div class='cbp-vm-details'>" + time + " </div><div class='cbp-vm-author'>" + owner + " </div><div onclick='deleteFile(this)'  data-mimetype =" + mimetype + "  data-fileurl =" + fileUrl + " data-id ='" + id + "' class='btn btn-sm cbp-vm-icon cbp-vm-add'><i class='glyphicon glyphicon-trash'></i></div><a href= 'file/original/"+id+ '.' + mimetype.split('/')[1]+"'  download='"+id+file_suffix+"' class='btn btn-sm cbp-vm-icon cbp-vm-download'><i class='glyphicon glyphicon-download-alt'></i></a><a class='btn btn-sm cbp-vm-icon cbp-vm-edit' href='#' data-toggle='modal' data-target='#editModal'><i class='glyphicon glyphicon-edit'></i></a></li>");
+                                    }
+                                    if(mimetype.indexOf("video")>=0 || mimetype.indexOf("audio")>=0)
+                                    {
+                                        var thum = null;
+                                        (mimetype.split('/')[0] == 'audio') ? file_suffix=".mp3" : file_suffix=".mp4";
+                                        if(mimetype.indexOf("video")>=0)
+                                          {thum = '<video src="file/thumbnail/'+ id + '.' + mimetype.split('/')[1]+ '"></video>'}
+                                        else
+                                          {thum = '<img style="height:60%;" src=images/music.png />'}
+                                          $('#listNew').append("<li><div class='cbp-vm-checkbox' style='float:left;line-height:60px'><input class='checkbix checkedbox' id='mycheckbox5' type='checkbox' data-id =" + id + " data-mimetype =" + mimetype + " data-name = " + newName +" data-color='blue' data-text='Blue'></div><a data-id =" + id + " data-mimetype =" + mimetype + " data-fileurl =" + fileUrl + " data-toggle='modal' data-target='#myModal'  class='cbp-vm-image' href='#'>"+thum+"</a><p data-id =" + id + " class='cbp-vm-title filename'><a class='newName'   data-id =" + id + " style='display:block;overflow:hidden;text-overflow:ellipsis;border-bottom:none;cursor:pointer;height:60px;color:inherit'>" + newName +"</a><span style='position:absolute;top:18px;left:30px;font-size:12px'>"+ duration +"</span>" + "</p><div class='cbp-vm-price'>" + imgSize +" </div><div class='cbp-vm-details'>" + time + " </div><div class='cbp-vm-author'>" + owner + " </div><div onclick='deleteFile(this)' data-mimetype =" + mimetype + "  data-fileurl =" + fileUrl + "  data-id ='" + id + "' class='btn btn-sm img-d-e imgDelete cbp-vm-icon cbp-vm-add'><i class='glyphicon glyphicon-trash'></i></div><a href= 'file/original/"+id+ '.' + mimetype.split('/')[1]+"'  download='"+id+file_suffix+"' class='btn btn-sm cbp-vm-icon cbp-vm-download'><i class='glyphicon glyphicon-download-alt'></i></a><a class='btn btn-sm cbp-vm-icon cbp-vm-edit' href='#' data-toggle='modal' data-target='#editModal'><i class='glyphicon glyphicon-edit'></i></a></li>");
+                                    }
+                                };
+                                $('#loading').hide();                                             //  动画显示出来，内容没加载出来时   
+
+                                if(data.data[0].length == 0 && $('#listNew').find('li').length == 0){$('#listNew').append('<span>No data!</span>')}
+
+                                $('.newName').editable({
+                                    type: "text",               //编辑框的类型。支持text|textarea|select|date|checklist等
+                                    title: "<%= lang.rename_title %>",           //编辑框的标题
+                                    disabled: false,           //是否禁用编辑
+                                    emptytext: "<%= lang.rename_null %>",       //空值的默认文本
+                                    mode: "popup",            //编辑框的模式：支持popup和inline两种模式，默认是popup
+                                    url : function(params) {
+                                        return $.post('file/rename',{params:params.value,id:this.dataset.id});  
+                                    },  
+                                    success:function(){
+                                        stateAlert("<%= lang.success %>","<%= lang.rename_success %>",'success');
+                                    },
+                                    validate: function (value) { //字段验证
+                                        if (!$.trim(value)) {
+                                            return '<%= lang.rename_fail %>';
+                                        }
+                                    }
+                                });
+                                
+                                //文件选择
+                                $(".checkedbox").click(function(){
+                                    checkSelete(this)
+                                });
+                                
+                            }, //success结束
+                            error: function(err){ $('#loading').hide();$('#listNew').append('<span>No data!</span>')}
+                        });
+                    }
+                });}else{$('#loading').hide(); $('#listNew').append('<span>No data!</span>')}
+            },error:function(){alert('ddd')}
+        });
+    };
+
+    //选择视图模式
+    function toggle_switch(obj) {
+        $(obj).parent().siblings().removeClass("active");
+        $(obj).parent().addClass("active");
+    };
+
+    //文件选择
+    var url_arr = [];
+    var url_list = $('#url-list');
+    var url_list_box = $('#url-list-box');
+   
+    Array.prototype.remove = function(val) {
+        var index = this.indexOf(val);
+        var that  = this;
+        
+        for(var i=0;i<url_arr.length;i++)
+        {
+            if(url_arr[i].url == val.url)
+            {
+                if (i > -1) {this.splice(i, 1);}
+            }
+        }
+    };
+    
+    function checkSelete(target){
+        if(typeof target == 'object'){
+            if(target.checked){
+            //当前为选中状态
+            $(target).parent().parent().css('background','#f0f8ff');
+            var li_data = {name:target.dataset.name,url:'file/original/'+target.dataset.id+ '.' + target.dataset.mimetype.split('/')[1]}
+            url_arr.push(li_data);
+            }else{
+                //当前为不选中状态
+                $(target).parent().parent().css('background','');
+                var li_data = {name:target.dataset.name,url:'file/original/'+target.dataset.id+ '.' + target.dataset.mimetype.split('/')[1]}
+                url_arr.remove(li_data);
+            }; 
+        }else{
+            url_arr = [];
+            $(".checkedbox").each(function(){
+                $(this).attr('checked',false);
+                $(this).parent().parent().css('background','')
+            })
+        }
+         
+            //选择完对div操作
+            if (url_arr === undefined || url_arr.length == 0) {
+                // array empty or does not exist
+                url_list_box.hide();
+            }else{
+                url_list_box.show();
+            };
+            
+            url_list.html('');
+            url_arr.forEach(function(data){
+                url_list.append("<li class='list-group-item'><a target = '_new' href = '"+data.url+"'>"+data.name+"</a></li>")
+            });
+    };
+
+    function noSelete(target){
+        if(target.checked){
+            //当前为选中状态
+            url_arr.push('file/original/'+target.dataset.id + '.' + target.dataset.mimetype.split('/')[1]);
+        }else{
+            //当前为不选中状态
+            url_arr.remove('file/original/'+target.dataset.id + '.' + target.dataset.mimetype.split('/')[1]);
+        };
+    };
+
+    //删除按钮触发删除图片
+    function deleteFile(that) {
+        confirm("<%= lang.Sure_delete %>", "<%= lang.Message_delete %>", function (isConfirm) {
+                if (isConfirm) {
+                    var id = $(that).data("id");
+                    var fileurl = $(that).data("fileurl");
+                    var mimetype = $(that).data("mimetype");
+
+                    
+                    $.ajax({
+                        url: 'file/del',
+                        type: 'POST',
+                        data: {id: id,mimetype: mimetype,fileurl: fileurl},
+                        success: function (data) {
+                            $(that).parent().addClass('animated bounceOutUp');
+                            setTimeout(function(){$(that).parent().css('display','none')}, 1000);
+                            stateAlert("<%= lang.success %>","<%= lang.deleteFile_success %>",'success');
+                        },
+                        error: function (data) {
+                            stateAlert("<%= lang.error %>","<%= lang.deleteFile_fail %>",'danger');
+                        }
+                    })
+                } else {
+                    return false
+                }
+            }, {confirmButtonText: "<%= lang.delete %>", cancelButtonText: "<%= lang.cancel %>", width: 440});
+    };
+   
+    //编辑标题
+    $(function () {$('#editModal').on('show.bs.modal', function (e) {
+         var that           = $(e.relatedTarget);
+         var paramsTag      = $($(that.parent().find('.newName'))[0]);
+         var params         = $($(that.parent().find('.newName'))[0]).text();
+         var pid            = $(that.parent().find('.filename'))[0].dataset.id;
+         var tHis           = $(this);
+         var formDataParams = tHis.find('#formDataParams');
+         var formDataId     = tHis.find('#formDataId');
+
+        tHis.find('#formDataParams').val(params);
+        tHis.find('#formDataId').val(pid);
+        
+        $("#renameSubBtn").click(function () {
+            if($("#formDataParams").val())
+            {
+                $.ajax({
+                cache: false,
+                type: "POST",
+                url: 'file/rename',//提交的URL
+                data: $('#renameSub').serialize(), // 要提交的表单,必须使用name属性
+                async: false,                    
+                success: function (data) {
+                    paramsTag.text(formDataParams.val());
+                    stateAlert("<%= lang.success %>","<%= lang.rename_success %>",'success');
+                },
+                error: function (request) {
+                    stateAlert("<%= lang.error %>","<%= lang.rename_fail %>",'danger');
+                }
+            });
+            }else{
+                stateAlert("<%= lang.error %>","<%= lang.rename_blank %>",'danger');
+            }
+            
+        });
+   });
+   });
+
+    //返回状态 方法
+    function stateAlert(state,massage,style){
+        var styLe = "alert alert-"+style;
+        $("#myAlert").attr("class",styLe);
+        $("#myAlert").find('#myState').text(state);
+        $("#myAlert").find('#myMassage').text(massage);
+        $("#myAlert").animate().show(function(){
+        });
+        setTimeout(function(){$("#myAlert").hide()},4000);
+    };
+    
+    function media_check(type,typ){
+        // var audio = $('#audio-box').find(type)[0];
+        //     if (audio.canPlayType(typ) == "probably") {   //浏览器是否支持音频格式
+        //     }else{
+        //         alert("您的浏览器不支持 " + type + " 标签。")
+        //     }
+    };
+
+    
+    //取大图 ，模态框
+    $("#myModal").on("show.bs.modal", function (e) {
+        // 这里的btn就是触发元素，即你点击的删除按钮
+        var that = $(e.relatedTarget);
+        var mimetype = that.data("mimetype");
+        var id = that.data('id');
+        var fileUrl = that.data('fileurl');
+        var tHis = $(this);
+        //如果是图片类型
+        if(mimetype.indexOf("image")>=0)
+        {     tHis.find('#downFile').attr('href','file/original/' + id + '.' + mimetype.split('/')[1]);
+              tHis.find('#downFile').attr('download',id + '.jpg');
+              tHis.find('#video-box').css('display','none');
+              tHis.find('#audio-box').css('display','none');
+              tHis.find('#img-box').css('display','block');
+              tHis.find('#img-box').find('img').attr('src', 'file/original/' + id + '.' + mimetype.split('/')[1]);
+        }
+
+        //如果是视频类型      
+        if(mimetype.indexOf("video")>=0)
+        {
+              tHis.find('#downFile').attr('href',fileUrl);
+              tHis.find('#downFile').attr('download',id + '.mp4');
+              tHis.find('#video-box').css('display','block');
+              tHis.find('#img-box').css('display','none');
+              tHis.find('#audio-box').css('display','none');
+              tHis.find('#video-box').find('video').attr('src', fileUrl);
+              media_check("video","video/mp4");
+        }
+        
+        //如果是音频类型  
+        if(mimetype.indexOf("audio")>=0)
+        {     
+              tHis.find('#downFile').attr('href',fileUrl);
+              tHis.find('#downFile').attr('download',id + '.mp3');
+              tHis.find('#audio-box').css('display','block');
+              tHis.find('#img-box').css('display','none');
+              tHis.find('#video-box').css('display','none');
+              tHis.find('#audio-box').find('img').attr('src', 'images/music.png');
+              tHis.find('#audio-box').find('audio').attr('src', fileUrl);
+              //   console.log(tHis.find('#audio-box').find('audio')[0].AudioTrackList);
+              media_check("audio",'audio/mp3');
+        }
+        // do your work
+    });
+
+    $('#myModal').on('hide.bs.modal', function () {
+        var tHis = $(this);
+        tHis.find('img').removeAttr("src");
+        tHis.find('video').removeAttr("src");
+    });
+
+
+    //上传弹出框功能
+    function UploadTab() {
+        this.initUpload = function () { $('.uploadDiv').css('display', 'block'); $('#uploadIf').css('display', 'block'); $('#full').css('display', 'none'); $('#zoom').css('display', 'block'); $("#uploadIf").contents().find("#inputBtn").click(); }
+        this.close      = function () { $('#uploadIf').attr('src', $('#uploadIf').attr('src')); $('.uploadDiv').css('display', 'none'); };
+        this.zoom       = function () { $('#zoom').css('display', 'none'); $('#full').css('display', 'block'); $('#uploadIf').css('display', 'none') };
+        this.full       = function () { $('#full').css('display', 'none'); $('#zoom').css('display', 'block'); $('#uploadIf').css('display', 'block') };
+    };
+
+    var uploadTab = new UploadTab();
+    $('#close').click(function () { uploadTab.close()});
+    $('#full').click(function ()  { uploadTab.full() });
+    $('#zoom').click(function ()  { uploadTab.zoom() });
+    $('#initUpload').click(function () { uploadTab.initUpload() });
+
+    //把假的上传按钮绑定到真的上传按钮
+    function bindUpload() {$("#uploadIf").contents().find("#uploadBtn").click();}
+
+    //用于设置上传框 - 不论窗口框多大，上传框宽度占窗口一半
+    $('#uploadIf').width($('.uploadDiv').width());
+    $(window).resize(function () {
+        $('#uploadIf').width($('.uploadDiv').width());
+    });
+
+    //图片数据大小单位换算
+    function bytesToSize(bytes) {
+        if (bytes === 0) return '0 B';
+            var k = 1000; // or 1024
+            sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+            i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseInt((bytes / Math.pow(k, i))) + ' ' + sizes[i];
+    };
+    $(window).on("mousewheel",function () {
+            if($('#loading').is(':hidden'))
+            {
+                var scrollTop    = $(this).scrollTop();
+                var scrollHeight = $(document).height();
+                var windowHeight = $(this).height();
+                var btnNext      = $('#btnNext');
+                if (scrollTop + windowHeight == scrollHeight) {
+                //此处是滚动条到底部时候触发的事件，在这里写要加载的数据，或者是拉动滚动条的操作
+                btnNext.click();
+                }
+            }
+    });
+
+</script>
+
+</html>

@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap-validator.min.css">
+    <link rel="stylesheet" href="../css/bootstrap-table.min.css">
+    <link rel="stylesheet" href="../css/fileinput.min.css">
+    <link rel="stylesheet" href="../css/animate.css">
+    <link rel="stylesheet" href="../css/toastr.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/attachment/tooltip3a7b39.css">
+    <link href="/statics/css/bootstrap-theme.min.css" rel="stylesheet" />
+    <style>
+        .bs-bars {
+            width: calc(100% - 100px);
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        .toc {
+            position: absolute;
+            /* top: 465px;
+            right: -100px;
+            width: 100px; */
+            top: 100px;
+            box-sizing: border-box;
+            display: none;
+        }
+
+
+        .dropautoheight {
+            height: auto;
+        }
+
+        /* .file-drop-zone-title {
+            padding: 15px 10px;
+        }
+
+        #beacon_images .file-drop-zone-title {
+            padding: 100px 10px;
+        } */
+
+        .file-preview-frame.krajee-default[data-template="audio"] .kv-file-content {
+            height: 30px;
+            width: 580px;
+        }
+
+        .krajee-default.file-preview-frame .kv-file-content {
+            height: 100px;
+            width: auto;
+        }
+
+        .krajee-default.file-preview-frame .file-thumbnail-footer {
+            height: 30px;
+        }
+
+        /* .krajee-default .file-preview-image {
+            height: 100px !important;
+        } */
+
+        .file-thumbnail-footer .file-footer-caption {
+            margin: 0;
+        }
+
+        textarea.explainTxt {
+            width: 100%;
+            height: 215px;
+            border-radius: 2px;
+        }
+
+        .leftnavcontainer {
+            float: left;
+            width: 15%;
+            padding: 0 10px 0 0;
+        }
+
+        .content-with-nav {
+            width: 85%;
+            border-left: 1px solid #ddd;
+            float: left;
+            /* padding-left: 15px; */
+            padding: 0 50px;
+        }
+
+        .side-navbar {
+            margin: 0 0 15px;
+            padding: 8px;
+            /* border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd; */
+            padding-left: 0;
+        }
+
+        .side-navbar li {
+            list-style-type: none;
+            margin: 0;
+            padding-left: 16px;
+        }
+
+        /* .side-navbar li a {
+            text-decoration: none ;
+        } */
+
+        /* .side-navbar li a:visited {
+            color: #005b86;
+        } */
+
+        .side-navbar li a {
+            color: #333;
+            display: block;
+            /* padding-right: 15px; */
+            text-decoration: none;
+            padding: 5px 0;
+        }
+
+        .side-navbar li.active>a,
+        .side-navbar li>a:hover {
+            color: #e47911;
+            /* border-left:5px solid #e47911; */
+        }
+
+        .side-navbar li {
+            border-left: 4px solid hsla(0, 0%, 100%, 0);
+        }
+
+        .side-navbar li.active {
+            border-left: 4px solid #e47911;
+        }
+
+        .nav-popover-trigger {
+            float: right;
+            margin-top: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            line-height: 1.4;
+            position: relative;
+            right: 35px;
+        }
+
+        #langsdrop a.nav-popover-trigger {
+            color: #333;
+            list-style-type: none;
+            text-decoration: none;
+        }
+
+        #langsdrop a.nav-popover-trigger:hover {
+            color: #f8991d;
+        }
+
+        /* #langs li {
+            padding: 3px 0;
+        } */
+
+        #beaconAttachModal {
+            /* 字体被统一时需要删除*/
+            font-family: sans-serif;
+        }
+
+        #beaconAttachModal .modal-dialog {
+            height: 100%;
+            width: 100%;
+            max-height: 1024px;
+            max-width: 1280px;
+            margin: 0px auto;
+        }
+
+        #beaconAttachModal .modal-content {
+            height: 100%;
+            border-radius: 0px;
+            box-shadow: none;
+        }
+
+        #langs li a {
+            position: relative;
+            display: inline-block;
+            padding: 3px 0;
+            color: #0a253c;
+            text-decoration: none;
+            background-color: inherit;
+            outline: 0;
+        }
+
+        #langs li a:hover {
+            background-color: inherit;
+            color: #e47911;
+        }
+
+        #langs li.active a:first-of-type {
+            color: #e47911;
+        }
+
+        #langs li a:first-child {
+            left: 17px;
+            width: 100px;
+        }
+
+        #langs li a:last-child {
+            right: -30px;
+        }
+
+        /* .modal-header {
+            padding: 15px 15px 12px;
+        } */
+
+        #beaconAttachModal .modal-body {
+            position: relative;
+            padding: 0 15px;
+        }
+
+        .btn_disabled,
+        .btn_disabled:hover {
+            background-color: #e7e7eb !important;
+            border-color: #dadbe0 !important;
+            color: #a5a6aa !important;
+            /* cursor: default; */
+        }
+
+        .wx_phone_preview {
+
+            background: url('../images/iphone-bg.png') 0 0 no-repeat;
+            background-size: 90%;
+        }
+
+        .mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            filter: alpha(opacity=75);
+            -moz-opacity: .75;
+            -khtml-opacity: .75;
+            opacity: .8;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 9995;
+        }
+
+        .wx_phone_bd {
+            height: 284px;
+        }
+
+        .wx_phone_preview {
+            margin-top: -330px;
+        }
+
+        .wx_phone {
+            padding: 78px 55px 0px 19px;
+        }
+
+        .wx_phone_hd {
+            background-color: #333;
+            height: 150px;
+            padding: 0;
+        }
+
+        .carousel-inner>.item>a>img,
+        .carousel-inner>.item>img {
+            height: 150px;
+            /* width: 100%; */
+            margin: auto;
+        }
+
+        .audioplay {
+            background: url('../images/lALPBbCc1U0jX7ZkZA_100_100.png');
+            height: 100%;
+            background-size: 100%;
+        }
+
+        .audiopause {
+            background: url('../images/lALPBbCc1U0iPWNkZA_100_100.png');
+            height: 100%;
+            background-size: 100%;
+        }
+
+        .btn.btn_phone_preview_closed.jsPhoneViewClose:hover {
+            background-color: rgb(231, 231, 235);
+            background-image: linear-gradient(rgb(231, 231, 235) 0px, rgb(231, 231, 235) 100%);
+            box-shadow: none;
+            color: rgb(34, 34, 34);
+            border-color: rgb(218, 219, 224);
+        }
+
+        .btn.btn_phone_preview_closed.jsPhoneViewClose {
+            padding: 6px;
+            background: #fff
+        }
+
+        .modalmarginsmall {
+            margin: 0px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <span class="navbar-brand">
+                    <%= lang.tourbeacon_list %>
+                </span>
+            </div>
+        </div>
+    </nav>
+    <div id="tourbeacons_toolbar">
+        <div class="input-group" style="width:300px;float:left;">
+            <span class="input-group-addon"><%= lang.filter %>:</span>
+            <input class="form-control" id="beaconid" name="beaconid" data-provide="typeahead" autocomplete="off" placeholder="Beacon ID" style="float:left;" />
+            <span class="input-group-addon btn btn-primary" onclick="doQueryBeacon();">
+                <i class="fa fa-search"></i>
+                <%= lang.search %>
+            </span>
+        </div>
+        <div class="btn-group" style="float:right;">
+            <button class="btn btn-success" data-toggle="modal" data-target="#AddBeaconModal">
+                <i class="fa fa-plus"></i>
+                <%= lang.add %>
+            </button>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table id="tourbeacons">
+        </table>
+    </div>
+
+    <!-- beacon信息添加模态框（Modal） -->
+    <div class="modal" id="AddBeaconModal" tabindex="-1" role="dialog" aria-labelledby="beaconAddModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="beaconnIformation">
+                        <%= lang.add_beacon_basic_information %>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <form id="form_tourbeacon_add" class="form-horizontal" onsubmit="return false">
+                            <div class="form-group">
+                                <label for="id" class="col-sm-3 control-label">
+                                    <%= lang.id %>
+                                        <span style="color:red;">*</span>
+                                </label>
+                                <div class="col-sm-8">
+                                    <input name="beaconid" type="text" class="form-control" placeholder="tourbeacon ID">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="model" class="col-sm-3 control-label">Model</label>
+                                <div class="col-sm-8">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="model" value="1" checked="checked"> 模板 1
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="model" value="2"> 模板 2
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">
+                                    <%= lang.latlng %>
+                                </label>
+                                <div class="col-sm-4">
+                                    <input name="longitude" class="form-control" value="" placeholder="longitude">
+                                </div>
+                                <div class="col-sm-4">
+                                    <input name="latitude" class="form-control" value="" placeholder="latitude">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">
+                                    <%= lang.floor %>
+                                </label>
+                                <div class="col-xs-8 col-md-8 col-sm-8 control-group">
+                                    <div class="input-group">
+                                        <select name="floor_id" class="form-control" style="width:40%;float:left;" data-bv-field="floor_id">
+                                        </select>
+                                        <input id="addDevice_point_x" name="point_x" class="form-control" placeholder="x" style="border-left:0;width:30%;float:left;"
+                                            data-bv-field="point_x">
+                                        <input id="addDevice_point_y" name="point_y" class="form-control" placeholder="y" style="border-left:0;width:30%;float:left;"
+                                            data-bv-field="point_y">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">
+                                    <%= lang.status %>
+                                </label>
+                                <div class="col-xs-8 col-md-8 col-sm-8">
+                                    <select name="status" class="form-control">
+                                        <option value="active">
+                                            <%= lang.active %>
+                                        </option>
+                                        <option value="decommissioned">
+                                            <%= lang.decommissioned %>
+                                        </option>
+                                        <option value="inactive">
+                                            <%= lang.inactive %>
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">
+                                    <%= lang.stability %>
+                                </label>
+                                <div class="col-xs-8 col-md-8 col-sm-8 control-group">
+                                    <select name="stability" class="form-control">
+                                        <option value="stable">
+                                            <%= lang.stable %>
+                                        </option>
+                                        <option value="portable">
+                                            <%= lang.portable %>
+                                        </option>
+                                        <option value="mobile">
+                                            <%= lang.mobile %>
+                                        </option>
+                                        <option value="roving">
+                                            <%= lang.roving %>
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="description" class="col-sm-3 control-label">
+                                    <%= lang.description %>
+                                </label>
+                                <div class="col-sm-8 control-group control-group">
+                                    <input type="text" class="form-control" name="description" maxlength="4000" placeholder="Description">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <%= lang.close %>
+                    </button>
+                    <button type="submit" class="btn btn-primary" id="tourbeacon_Add">
+                        <%= lang.submit %>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.modal -->
+
+    <!-- beacon信息编辑模态框（Modal） -->
+    <div class="modal" id="EditBeaconModal" tabindex="-1" role="dialog" aria-labelledby="beaconEditModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="beaconnIformation">
+                        <%= lang.edit_beacon_basic_information %>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <form id="form_tourbeacon_edit" class="form-horizontal" onsubmit="return false">
+                            <div class="form-group">
+                                <label for="id" class="col-sm-3 control-label">
+                                    <%= lang.id %>
+                                        <span style="color:red;">*</span>
+                                </label>
+                                <div class="col-sm-8">
+                                    <input type="text" id="edit_beaconid" class="form-control" name="beaconid" placeholder="tourbeacon ID">
+                                    <input type="hidden" id="edit_beaconid_id" name="beaconid_id" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="model" class="col-sm-3 control-label">Model</label>
+                                <div class="col-sm-8">
+                                    <label class="radio-inline">
+                                        <input type="radio" name="model" id="edit_model1" data-index="1"> 模板 1
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="model" id="edit_model2" data-index="2"> 模板 2
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">
+                                    <%= lang.latlng %>
+                                </label>
+                                <div class="col-sm-4">
+                                    <input id="edit_longitude" name="longitude" class="form-control" value="" placeholder="longitude">
+                                </div>
+                                <div class="col-sm-4">
+                                    <input id="edit_latitude" name="latitude" class="form-control" value="" placeholder="latitude">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">
+                                    <%= lang.floor %>
+                                </label>
+                                <div class="col-xs-8 col-md-8 col-sm-8 control-group">
+                                    <div class="input-group">
+                                        <select id="edit_floor_id" name="floor_id" class="form-control" style="width:40%;float:left;" data-bv-field="floor_id">
+                                        </select>
+                                        <input id="edit_point_x" name="point_x" class="form-control" placeholder="x" style="border-left:0;width:30%;float:left;"
+                                            data-bv-field="point_x">
+                                        <input id="edit_point_y" name="point_y" class="form-control" placeholder="y" style="border-left:0;width:30%;float:left;"
+                                            data-bv-field="point_y">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">
+                                    <%= lang.status %>
+                                </label>
+                                <div class="col-xs-8 col-md-8 col-sm-8">
+                                    <select id="edit_status" name="status" class="form-control">
+                                        <option value="active">
+                                            <%= lang.active %>
+                                        </option>
+                                        <option value="decommissioned">
+                                            <%= lang.decommissioned %>
+                                        </option>
+                                        <option value="inactive">
+                                            <%= lang.inactive %>
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">
+                                    <%= lang.stability %>
+                                </label>
+                                <div class="col-xs-8 col-md-8 col-sm-8 control-group">
+                                    <select id="edit_stability" name="stability" class="form-control">
+                                        <option value="stable">
+                                            <%= lang.stable %>
+                                        </option>
+                                        <option value="portable">
+                                            <%= lang.portable %>
+                                        </option>
+                                        <option value="mobile">
+                                            <%= lang.mobile %>
+                                        </option>
+                                        <option value="roving">
+                                            <%= lang.roving %>
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="description" class="col-sm-3 control-label">
+                                    <%= lang.description %>
+                                </label>
+                                <div class="col-sm-8 control-group control-group">
+                                    <input id="edit_description" type="text" class="form-control" name="description" maxlength="4000" placeholder="Description">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        <%= lang.close %>
+                    </button>
+                    <button type="submit" class="btn btn-primary" id="tourbeacon_Edit">
+                        <%= lang.submit %>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.modal -->
+
+    <!-- beacon 附件添加/编辑模态框（Modal） -->
+    <div class="modal" id="beaconPreviewModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <!-- <button type="button" class="close" aria-hidden="true" data-dismiss="modal">×</button> -->
+                    <a class="close" id="previewqrcode"  data-toggle="popover"  data-html="true"  data-placement="bottom" 
+                        data-content='<div id="code" style="height:235px;width:160px"><div style="margin-top: 10px;">
+                            扫一扫,在手机上预览！<hr><div></div>' style="color: #337ab7;opacity: 1;">
+                        <i class="fa fa-qrcode"></i>
+                    </a>
+                    <h4 class="modal-title" id="attachmentPreviewLabel">
+                        Preview
+                    </h4>
+                </div>
+                <div class="modal-body" style="padding:0">
+                    <iframe id="tour_preview" name="tour_preview" width="100%" height="400px" src="" frameborder="0"></iframe>
+                </div>
+                <div class="modal-footer" style="padding-right: 35px;">
+                    <button type="button" class="btn btn-default" id="button-preview-close" style="padding: 6px 22px;" data-dismiss="modal">
+                        <%= lang.close %>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.modal -->
+
+    <!-- beacon 附件添加/编辑模态框（Modal） -->
+    <div class="modal" id="beaconAttachModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content ">
+                <div class="modal-header">
+                    <button type="button" class="close" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="attachmentModalLabel">
+                        <%= lang.beacon_attachment_edit %>
+                    </h4>
+                </div>
+                <div class="modal-body" style="padding:0">
+                    <div class="attachmen_tips_wrp" style="text-align: center;">
+                        <i style=" background:url(../css/attachment/icon40_loading_white3a7b38.gif) no-repeat;width: 40px;height: 40px;
+                        vertical-align: middle;
+                        display: inline-block;
+                        line-height: 100px;
+                        overflow: hidden;">loading...</i>
+                        <span class="" style="display: inline-block;height: 100%;vertical-align: middle;"></span>
+                    </div>
+                    <iframe id="tour_attachment" name="tour_attachment" width="100%" height="" src="" frameborder="0"></iframe>
+                </div>
+                <div class="modal-footer" style="padding-right: 35px;">
+                    <button type="button" class="btn btn-default" id="closeattach" style="padding: 6px 22px;">
+                        <%= lang.close %>
+                    </button>
+                    <button type="button" class="btn btn-default" id="iphonepreview" style="padding: 6px 22px;">
+                        <%= lang.preview %>
+                    </button>
+                    <button type="submit" class="btn btn-primary" style="padding: 6px 22px;" id="tourbeacon_Attachment">
+                        <%= lang.submit %>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.modal -->
+
+    <!-- beacon 图片库模态框（Modal） -->
+    <div class="modal" id="imagslib" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content ">
+                <div class="modal-header" style="border-bottom:0;padding: 15px 32px;height: 72px;">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">
+                        <%= lang.select_image %>
+                    </h4>
+                </div>
+                <div class="modal-body" style="padding:0;">
+                    <iframe id="tour_imgslibrary" name="tour_imgslibrary" width="100%" height="648" src="" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.modal -->
+
+    <!-- beacon 音频库模态框（Modal） -->
+    <div class="modal" id="audioslib" data-id='' tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content ">
+                <div class="modal-header" style="border-bottom:0;padding: 15px 32px;height: 72px;">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">
+                        <%= lang.select_audio %>
+                    </h4>
+                </div>
+                <div class="modal-body" style="padding:0;">
+                    <iframe id="tour_audioslibrary" name="tour_audioslibrary" width="100%" height="648" src="" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.modal -->
+
+    <!-- beacon iphone 预览框 -->
+    <div class="wx_phone_preview_wrp jsPhoneView" id="attachpreview" style="display: none;">
+        <div class="wx_phone_preview">
+            <span class="btn btn_default btn_phone_preview_closed jsPhoneViewClose">
+                <%= lang.close %>
+            </span>
+            <div class="wx_phone jsPhoneViewMain">
+
+            </div>
+            <!--jsPhoneViewMain-->
+        </div>
+        <div class="mask"></div>
+    </div>
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/jquery.qrcode.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/fileinput.min.js" type="text/javascript"></script>
+    <script src="../js/bootstrap-typeahead.min.js"></script>
+    <script src="../js/bootstrap-validator.min.js"></script>
+    <script src="../js/bootstrap-table.min.js"></script>
+    <script src="../js/bootstrap-table-locale-all.min.js"></script>
+    <script src="../js/bootstrap-table-export.min.js"></script>
+    <script src="../js/tableExport.js"></script>
+    <script src="../js/imgloading.js"></script>
+    <script src="../js/toastr.min.js"></script>
+    <script src="../js/function.js"></script>
+    <script>
+        var actions_title = "<%= lang.actions %>";
+        var attachment_title = "<%= lang.attachment %>";
+        var source_title = "<%= lang.source %>";
+        var description_title = "<%= lang.description %>";
+        var floor_title = "<%= lang.floor %>";
+        var latlng_title = "<%= lang.latlng %>";
+        var stability_title = "<%= lang.stability %>";
+        var status_title = "<%= lang.status %>";
+        var id_title = "<%= lang.id %>";
+        var no_title = "<%= lang.no %>";
+        var langlocale = "<%= langlocale %>";
+
+        var hostoutprefix = window.location.protocol + '//' + window.location.host +'/storage';
+
+        var attachmentiframe = document.getElementById("tour_attachment");      //IE及... ,没有readyState属性
+        var attachmentifreamstatus;                                             //attachment的ifream加载状态
+
+        if (attachmentiframe.attachEvent) {                                     //（IE兼容）
+            attachmentiframe.attachEvent("onload", function () {
+                attachmentifreamstatus = "1"
+            });
+        } else {
+            attachmentiframe.onload = function () {                             //非IE
+                attachmentifreamstatus = "1"
+            };
+        }
+
+        $(function () {
+            initTable_tourBeacon();                     //初始化表格
+            setFraemHeight()                            //设置ifream高度
+            autosetmodalmargin();                       //窗口过小附件、音频、图片模态框上下外边距设置为0
+            $("[data-toggle='popover']").popover();     //active all popover
+
+            $("#tour_attachment").attr("src", "../beacon/attachment");                              //JS加载attachment页面，防止父页面函数未加载完成attachment子页面就调用的BUG
+
+            //根据窗口调整表格高度
+            $(window).resize(function () {
+                $('#tourbeacons').bootstrapTable('resetView', { height: tableHeight(66) });
+                autosetmodalmargin();                                                               //窗口过小附件、音频、图片模态框上下外边距设置为0
+
+                if (attachmentifreamstatus) {
+                    var displaystatus = $('#beaconAttachModal').css("display")                      //attachment的ifream已加载完毕
+                    windowresizeSetFraemHeight(displaystatus);                                      //attachment模态框隐藏的情况下进行all ifream大小调整
+
+                    var viewHeight = $(window).height();
+                    var attachmentHeight = viewHeight - 136;
+                    $("#tour_attachment").attr("height", attachmentHeight);
+                    $(".attachmen_tips_wrp").css("height",attachmentHeight) //attachedment¼ÓÔØÌáÊ¾¿ò¸ß¶ÈÉèÖÃ
+                    
+                    document.getElementById('tour_attachment').contentWindow.divbodyHeightreset();  //attachment内#body高度改变（兼容IE的方法）
+                }
+            });
+
+            $(".jsPhoneViewClose").click(function () {              //关闭手机预览界面
+                $("#attachpreview").css("display", "none");
+            })
+
+            $.get("../beacon/typeahead", { beaconType: "tour" }, function (beaconids) {
+                // console.log("data:",beaconids);
+                $("#beaconid").typeahead({ source: beaconids });
+            }, 'json');
+
+            $("#form_tourbeacon_add").submit(function (ev) { ev.preventDefault(); });
+            $("#tourbeacon_Add").on("click", function () {
+                var bootstrapValidator = $("#form_tourbeacon_add").data('bootstrapValidator');
+                bootstrapValidator.validate();
+                if (bootstrapValidator.isValid()) {
+                    $("#form_tourbeacon_add").submit();
+                    $.ajax({
+                        url: '../beacon/add',
+                        type: 'POST',
+                        data: $("#form_tourbeacon_add").serialize(),
+                        success: function (data) {
+                            toastr.success('添加Beacon成功！');
+                            $('#tourbeacons').bootstrapTable('refreshOptions', { ajaxOptions: { async: true } });    //刷新表格
+                            $('#AddBeaconModal').modal('hide');
+                            $("#form_tourbeacon_add input").each(function () {                                         //清空填写的值
+                                $(this).val('')
+                            })
+                        },
+                        error: function () {
+                            toastr.error('ֻ添加Beacon失败，请稍后再试！');
+                        }
+                    });
+                } else {
+                    return;
+                };
+            });
+
+            $("#form_tourbeacon_edit").submit(function (ev) { ev.preventDefault(); });
+            $("#tourbeacon_Edit").on("click", function () {
+                var bootstrapValidator = $("#form_tourbeacon_edit").data('bootstrapValidator');
+                bootstrapValidator.validate();
+                if (bootstrapValidator.isValid()) {
+                    $("#form_tourbeacon_edit").submit();
+                    $.ajax({
+                        url: '../beacon/update',
+                        type: 'POST',
+                        data: $("#form_tourbeacon_edit").serialize(),
+                        success: function (data) {
+                            toastr.success('修改Beacon信息成功！');
+                            $('#tourbeacons').bootstrapTable('refreshOptions', { ajaxOptions: { async: true } });    //刷新表格
+                            $('#EditBeaconModal').modal('hide');
+                        },
+                        error: function () {
+                            toastr.error('ֻ修改Beacon信息失败，请稍后再试！');
+                        }
+                    });
+                } else {
+                    return;
+                };
+            });
+
+            $.ajax({
+                url: '/device/floor/typeahead',
+                type: 'get',
+                cache: false,
+                success: function (floorlist) {
+                    for (var i = 0; i < floorlist.length; i++) {
+                        $("select[name=floor_id]").append('<option value=' + floorlist[i]._id + '>' + floorlist[i].building_id.name + '&nbsp;&nbsp;|&nbsp;&nbsp;' + floorlist[i].name + '</option>');
+                    };
+                },
+                error: function (dXMLHttpRequest, textStatus, errorThrown) {
+                    toastr.error('获取楼层列表失败，请联系管理员！');
+                }
+            });
+        });
+
+        function autosetmodalmargin() {                            //窗口过小附件、音频、图片模态框上下外边距设置为0
+            var winheight = $(window).height();
+            if (winheight <= 680) {
+                $("#beaconAttachModal .modal-lg").addClass("modalmarginsmall");
+                $("#imagslib .modal-lg").addClass("modalmarginsmall");
+                $("#audioslib .modal-lg").addClass("modalmarginsmall");
+            } else {
+                $("#beaconAttachModal .modal-lg").removeClass("modalmarginsmall");
+                $("#imagslib .modal-lg").removeClass("modalmarginsmall");
+                $("#audioslib .modal-lg").removeClass("modalmarginsmall");
+            }
+        }
+
+        function AttachmentModalIO(action) {                       //附件编辑模态框控制
+            $('#beaconAttachModal').modal(action);
+        }
+
+        function modalIO(action) {                                 //图片库模态框控制
+            $("#imagslib").modal(action);
+        }
+
+        function AudioModalIO(action, inputid, audioAreaid) {      //音频库模态框控制
+            $("#audioslib").modal(action);
+            if (inputid && audioAreaid) {
+                $("#audioslib").attr("data-inputid", inputid);     //标记是那个语言的音频打开了音频模态框
+                $("#audioslib").attr("data-audioAreaid", audioAreaid);
+            }
+        }
+
+        function imgmodalshow(data, process) {                     //图片库模态框显示时的监听事件
+            $("#imagslib").off().on('shown.bs.modal', function () {
+                // console.log("图片库显示被触发")
+                process(data);
+                $("#body").css("overflow", "hidden");              //隐藏一层模态框的滚动条，防止二层模态框位置出现偏差
+            })
+        }
+
+        function imgmodalhide() {
+            $("#imagslib").on('hide.bs.modal', function () {
+                $("#body").css("overflow", "auto");
+                $("#beaconAttachModal").css("overflow-y", "auto"); //二层模态框显示时,一层模态框的Y轴滚动条一直被隐藏（一层滚动条auto）
+                // document.getElementById('tour_attachment').contentWindow.refreashscrollspy();       //刷新attachment滚动监视
+                document.getElementById('tour_attachment').contentWindow.Savebtnstatus();              //判断数据是否变化来残废保存按钮
+            })
+        }
+
+        function audiomodalhide(data, process) {                   //音频库模态框隐藏时的监听事件（7个音频按钮调用一个模态框，需在隐藏后进行数据清空操作）
+            $("#audioslib").on('hide.bs.modal', function () {
+                // console.log("音频库隐藏被触发");
+                process(data);
+                $("#body").css("overflow", "auto");                //隐藏一层模态框的滚动条，防止二层模态框位置出现偏差
+                $("#beaconAttachModal").css("overflow-y", "auto"); //二层模态框显示时,一层模态框的Y轴滚动条一直被隐藏（一层滚动条auto）
+                // document.getElementById('tour_attachment').contentWindow.refreashscrollspy();       //刷新attachment滚动监视
+                document.getElementById('tour_attachment').contentWindow.Savebtnstatus();              //判断数据是否变化来残废保存按钮
+            })
+        }
+        function audiomodalshow(data, process) {                   //音频库模态框显示时的监听事件
+            $("#audioslib").off().on('shown.bs.modal', function () {
+                // console.log("音频库隐藏被触发");
+                process(data);
+                $("#body").css("overflow", "hidden");
+            })
+        }
+
+        function SucErrinfo(IO, information) {
+            if (IO == "1") toastr.success(information);
+            if (IO == "0") toastr.error(information);
+            if (IO == "3") toastr.warning(information);
+        }
+
+        function attachmenSubmit(getdata) {                        //附件提交上传
+            $("#tourbeacon_Attachment").off('click').on("click", function () {
+                var data = getdata();
+                $.ajax({
+                    url: '../beacon/attachment/update',
+                    type: 'POST',
+                    data: data,
+                    success: function (data) {
+                        toastr.success('tour attachment update success！');
+                        $('#tourbeacons').bootstrapTable('refreshOptions', { ajaxOptions: { async: true } });    //刷新表格
+                        $('#beaconAttachModal').modal("hide");                                                   //隐藏附件模态框
+                        $(":input", "#form_tourbeacon_attachment").attr("value", "");                            // 关闭后重置表单
+
+                        // $("input[type=file]").fileinput('reset');       //重置上传组件
+                    },
+                    error: function () {
+                        toastr.error('ֻtour attachment update fail！');
+                    }
+                });
+            });
+        }
+
+        function attachmentMoadlhidecontrol(process) {
+
+            $("#beaconAttachModal,#beaconAttachModal .close,#closeattach").off("click").click(function () {
+                var bler = process();                                      //监视进行附件模态框隐藏操作时表单内容是否变化
+                if (bler) {
+                    if (confirm("未提交的内容会丢失，是否继续退出编辑页面？")) {
+                        $("#beaconAttachModal").modal("hide");
+                    }
+                } else {
+                    $("#beaconAttachModal").modal("hide");
+                }
+                // console.log("判断附件编辑内容是否改变")
+            })
+
+            $("#beaconAttachModal .modal-content").click(function (e) {
+                e.stopPropagation();                              //阻止编辑框点击事件冒泡
+            })
+        }
+
+        function ControlIphonePreviewAudio(obj) {                 //iphonepreview音频播放/暂停控制
+            var audio = $(obj).find("audio")[0];
+            var audiotype = $(obj).find("audio").attr("type");
+            if (audio.canPlayType(audiotype) == "probably") {     //浏览器是否支持音频格式
+                if (audio.paused) {
+                    audio.play();
+                    $(obj).find("div").removeClass('audioplay').addClass('audiopause').attr("title", "Pause");
+                } else {
+                    audio.pause();
+                    $(obj).find("div").removeClass('audiopause').addClass('audioplay').attr("title", "Play");;
+                }
+            } else {
+                toastr.warning("您的浏览器不支持" + audiotype + "格式的音频播放！");
+            }
+        }
+
+
+        function monitoriphonepreview(prosess) {                 //监控iPhone预览点击事件，传入预览数据
+            $("#iphonepreview").off("click").click(function () {
+                var data = prosess();
+                // console.log("苹果预览数据：", data);
+                if (!data) {
+                    toastr.warning('预览数据不符合要求！');
+                    return
+                }
+                var Carouseltarget = '';
+                var Carouselobj = '';
+                for (var i = 0; i < data.attachment_imgurl.length; i++) {
+                    if (i == 0) {
+                        Carouseltarget += '<li data-target="#myCarousel" data-slide-to=' + i + ' class="active"></li>';
+                        Carouselobj += '<div class="item active"><img src='+ hostoutprefix + data.attachment_imgurl[i].fileUrl + ' alt=' + data.attachment_imgurl[i].newName + '></div>'
+                    } else {
+                        Carouseltarget += '<li data-target="#myCarousel" data-slide-to=' + i + '></li>';
+                        Carouselobj += '<div class="item"><img src=' + hostoutprefix + data.attachment_imgurl[i].fileUrl + ' alt=' + data.attachment_imgurl[i].newName + '></div>'
+                    }
+                }
+
+                var content = '<div class="wx_phone_hd">' +
+                    '<div id="myCarousel" class="carousel slide" data-interval="false" style="float: none;">' +
+                    '<ol class="carousel-indicators" style="bottom: 0;">' + Carouseltarget +
+                    '</ol><div class="carousel-inner">' + Carouselobj +
+                    '</div><a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>' +
+                    '<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a></div></div>' +
+                    '<div class="wx_phone_bd wx_phone_preview_card_wrp" style="background-color: rgb(246, 249, 249)">' +
+                    '<div class="msg_card wx_phone_preview_card jsPhoneViewCard" data-index="0">' +
+                    '<h4>' + data.title + '</h4> ' + data.contentText.replace(/(\r)*\n/g, "</br>") +
+                    '</div></div><div style="height:70px;background-color:#fff">' +
+                    '<div onclick="ControlIphonePreviewAudio(this)" style="height: 70px; width: 70px; padding: 10px;float: left;cursor: pointer;">' +
+                    '<audio id="previewaudio" src=' + data.audiourl.fileUrl + ' type=' + data.audiourl.mimetype + '></audio>' +
+                    '<div class="audioplay"></div></div>' +
+                    '<div title=' + data.audiourl.newName + ' style="float: left;width: 210px;padding-right: 10px;overflow: hidden;line-height: 70px;white-space: nowrap;text-overflow: ellipsis;">' + data.audiourl.newName + '</div></div>'
+
+
+                $(".jsPhoneViewMain").html(content);
+                $("#attachpreview").css("display", "block");
+            })
+        }
+
+        function setFraemHeight() {                           //设置附件、音频库、图片库的ifream高度
+            var bodyH = $(document).height();
+            var setheight = bodyH * 0.9;
+
+            var viewHeight = $(window).height();
+            var attachmentHeight = viewHeight - 136;
+            $("#tour_attachment").attr("height", attachmentHeight);
+            $(".attachmen_tips_wrp").css("height",attachmentHeight) //attachedment¼ÓÔØÌáÊ¾¿ò¸ß¶ÈÉèÖÃ
+
+            if (setheight < 700) {
+                //$("#tour_attachment").attr("height", 513);
+                $("#tour_audioslibrary").attr("height", 561);
+                $("#tour_imgslibrary").attr("height", 561);
+            } else {
+                //$("#tour_attachment").attr("height", 600);
+                $("#tour_audioslibrary").attr("height", 648);
+                $("#tour_imgslibrary").attr("height", 648);
+            }
+        }
+
+        function windowresizeSetFraemHeight(displaystatus) { //监听window.resize事件，设置附件、音频库、图片库的ifream高度
+            if (displaystatus == "none") {
+                setFraemHeight();
+            }
+        }
+
+        function attachwindowresize(prosess) {
+            $(window).resize(function () {
+                var displaystatus = $('#beaconAttachModal').css("display")
+                windowresizeSetFraemHeight(displaystatus);                   //attachment模态框隐藏(display:none)的情况下进行ifream大小调整
+                prosess();
+            });
+        }
+
+        function attachShown(prosess) {                                      //attachment编辑页里完全显示
+            $('#beaconAttachModal').on('shown.bs.modal', function () {
+                prosess();
+            });
+        }
+
+        function doQueryBeacon(params) {
+            $('#tourbeacons').bootstrapTable('refreshOptions', { ajaxOptions: { async: true } });    //刷新表格
+        }
+
+        //请求服务器数据时，你可以通过重写参数的方式添加一些额外的参数，例如 toolbar 中的参数 如果 queryParamsType = 'limit' ,返回参数必须包含limit, offset, search, sort, order 否则, 需要包含:pageSize, pageNumber, searchText, sortName, sortOrder.返回false将会终止请求
+        function queryParams(params) {
+            var param = {
+                floor_id: $("#floorlist option:selected").val(),
+                beaconid: $("#beaconid").val(),
+                limit: this.limit,                // 页面大小
+                offset: this.offset,              // 页码
+                pageIndex: this.pageNumber,
+                pageSize: this.pageSize,
+                sortOrder: this.sortOrder,        //排序
+                sortName: this.sortName           //排序字段
+            }
+            return param;
+        }
+
+        //删除表格行数据
+        function removeRow(beaconid) {
+            if (confirm("此操作不可逆，确认删除吗？")) {                         //删除方法三
+                $.ajax({
+                    type: "POST",
+                    cache: false,
+                    async: true,
+                    url: "../beacon/del",
+                    data: { "id": beaconid },
+                    success: function (data) {
+                        toastr.warning('删除Beacon成功！');
+                        $("#tourbeacons").bootstrapTable('refreshOptions', { ajaxOptions: { async: true } });
+                    }
+                });
+            }
+        };
+
+        function resizeFrame() {
+            var content_iframe = window.parent.document.getElementById("cmpp_iframe");    //获取iframeID
+            // console.log("frameID", content_iframe);
+            $(content_iframe).attr("src", "beacon/add");                             //替换iframe内容
+        };
+
+
+        $("#AddBeaconModal").on("hidden.bs.modal", function () {
+            $("#form_tourbeacon_add")[0].reset();          // 关闭后重置表单
+            $("#form_tourbeacon_add").data('bootstrapValidator').destroy();
+            $('#form_tourbeacon_add').data('bootstrapValidator', null);
+        });
+        $('#AddBeaconModal').on('show.bs.modal', function () {
+            formValidator_tourBeacon("#form_tourbeacon_add");
+        });
+
+        $("#EditBeaconModal").on("hide.bs.modal", function () {
+            $(":input", "#form_tourbeacon_edit").attr("value", "");    // 关闭后重置表单
+            $("#form_tourbeacon_edit option").removeAttr("selected");
+            $("#form_tourbeacon_edit input").remove("checked");
+            $("#form_tourbeacon_edit").data('bootstrapValidator').destroy();
+            $('#form_tourbeacon_edit').data('bootstrapValidator', null);
+        });
+        $('#EditBeaconModal').on('show.bs.modal', function (e) {
+            var beacon_id = e.relatedTarget.attributes['data-id'].nodeValue;
+            var info = $("#tourbeacons").bootstrapTable('getRowByUniqueId', beacon_id);     //info为数组
+            $("#edit_beaconid").val(info.beaconid);
+            $("#edit_beaconid_id").val(info.id);
+            $("#edit_longitude").val(info.latlng[0]);
+            $("#edit_latitude").val(info.latlng[1]);
+            $("#edit_floor_id option[value='" + info.floor + "']").attr("selected", true);
+            $("#edit_point_x").val(info.point[0]);
+            $("#edit_point_y").val(info.point[1]);
+            $("#edit_status option[value='" + info.status + "']").attr("selected", true);
+            $("#edit_stability option[value='" + info.stability + "']").attr("selected", true);
+            $("#edit_description").val(info.description);
+            $("#form_tourbeacon_edit input[name='model'][data-index='" + info.model + "']").prop("checked",true);   //根据值让option选中
+
+        });
+        $('#EditBeaconModal').on('shown.bs.modal', function (e) {
+            formValidator_tourBeacon("#form_tourbeacon_edit");
+            var bootstrapValidator = $("#form_tourbeacon_edit").data('bootstrapValidator');
+            bootstrapValidator.validate();
+        })
+
+        $("#beaconAttachModal").on("hide.bs.modal", function () {
+            $("#tour_attachment").attr("src", "");              //清空url 
+            $("#tour_imgslibrary").attr("src", "");             //清空url 
+            $("#tour_audioslibrary").attr("src", "");           //清空url 
+
+            attachmentifreamstatus = undefined;                 //设置attachment ifream载入状态为空（未载入）
+            setFraemHeight();                                   //设置ifream高度
+            $("#tour_attachment").attr("src", "../beacon/attachment");    //重新加载页面（清空之前的数据）  
+
+        });
+
+        function ifreamstatussettime(attachments) {   //ÅÐ¶Ïattached ifreamÊÇ·ñ¼ÓÔØÍê±Ï£¬Ã»¼ÓÔØÍê±ÏÏÔÊ¾¼ÓÔØ¶¯»­¼ÌÐøÅÐ¶Ï
+            console.log("attaFreamstatus:", attachmentifreamstatus)
+            if (attachmentifreamstatus) {
+                $(".attachmen_tips_wrp").css("display","none")
+                $("#tour_attachment").css("display","block")
+                document.getElementById('tour_attachment').contentWindow.showpreviewContent(attachments);
+                document.getElementById('tour_attachment').contentWindow.textareaactive();  //textarea height Adaptive
+            } else {
+                $(".attachmen_tips_wrp").css("display","block")
+                $("#tour_attachment").css("display","none")
+                setTimeout(function(){
+                    ifreamstatussettime(attachments)
+                }, 500);
+            }
+        }
+
+        $('#beaconAttachModal').on('show.bs.modal', function (e) {
+            var beaconid = e.relatedTarget.attributes['data-id'].nodeValue;
+            // $("#tour_attachment").attr("src", "../beacon/attachment?tid=" + beaconid);
+            $("#tour_imgslibrary").attr("src", "../beacon/imgslibrary?tid=" + beaconid);
+            $("#tour_audioslibrary").attr("src", "../beacon/audioslibrary?tid=" + beaconid);
+            // var info = $("#tourbeacons").bootstrapTable('getRowByUniqueId', beaconid);     //infoÎªÊý×é
+
+            $.ajax({
+                url: '../beacon/getattachmentinfo',
+                type: 'get',
+                data: { "beaconid": beaconid },
+                success: function (data) {
+                    var attachments = data;
+                    ifreamstatussettime(attachments)    //ÅÐ¶Ïattached ifreamÊÇ·ñ¼ÓÔØÍê±Ï>ÔØÈëattachedÄÚÈÝ(Ã»¼ÓÔØÍê±Ï¼ÌÐøÅÐ¶Ï)
+                    // document.getElementById('tour_attachment').contentWindow.showpreviewContent(attachments);
+                },
+                error: function () {
+                    toastr.error('tour attachmentInfo get fail!');
+                }
+            });
+            
+        });
+
+
+        $('#beaconPreviewModal').on('hide.bs.modal', function (e) {
+            $("#tour_preview").attr("src", "about:blank");
+            $("#previewqrcode").off('shown.bs.popover')
+            $("#previewqrcode").popover('hide')
+        });
+        $('#beaconPreviewModal').on('show.bs.modal', function (e) {
+            var beaconid = e.relatedTarget.attributes['data-id'].nodeValue;
+            $("#tour_preview").attr("src", "../tour/find/single/webshow?beaconid=" + beaconid + '&language=zh-CN');
+            $("#previewqrcode").on('shown.bs.popover', function () {
+                var qrcodeUrl = 'http://demo.beaconice.com.cn/storage/tour'+$("#tour_preview").attr("src").replace(/\.\.\/tour/,"")
+                $('#code').qrcode({
+                    render: "table",
+	                width: 160, //宽度
+	                height:150, //高度
+	                text: qrcodeUrl //任意内容
+                });
+            })
+        });
+    </script>
+</body>
+
+</html>

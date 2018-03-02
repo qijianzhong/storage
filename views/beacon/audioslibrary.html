@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html style="overflow: hidden;">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>tour audio library</title>
+    <link rel="stylesheet" type="text/css" href="../css/attachment/base.css">
+    <link rel="stylesheet" type="text/css" href="../css/attachment/lib3a9ce3.css">
+    <link rel="stylesheet" href="../css/attachment/appmsg_new3a7b39.css" media="all">
+    <link rel="stylesheet" type="text/css" href="../css/attachment/tooltip3a7b39.css">
+    <link rel="stylesheet" type="text/css" href="../css/attachment/jquery.scrollbar3a7b39.css">
+    <link rel="stylesheet" type="text/css" href="../css/attachment/image_list3a7ad2.css">
+    <link rel="stylesheet" type="text/css" href="../css/attachment/weui-desktop_skin3a9ce3.css">
+
+
+
+
+    <style>
+        .audio_dialog .audio_title {
+            width: 352px;
+        }
+
+        .audio_music_dialog_content {
+            min-height: 547px;
+        }
+
+        .audio_dialog .audio_list_container .audio_list {
+            height: 465px;
+            overflow-y: auto;
+        }
+
+        .audio_music_dialog_content.small {
+            min-height: auto;
+        }
+
+        .audio_dialog .audio_list_container .audio_list.small {
+            height: 399px;
+        }
+
+        .jsPluginAudioList .AudioPlaying .icon_qqmusic {
+            background: url("../images/icon_audio3a7b38.gif");
+        }
+
+        .icon_loading_small.white {
+            background: url('../css/attachment/icon40_loading_white3a7b38.gif');
+        }
+
+        .btn-primary {
+            color: #fff !important;
+            background-color: #337ab7;
+            border-color: #2e6da4;
+
+        }
+
+        .btn-primary:hover {
+            color: #fff;
+            background-color: #286090;
+            border-color: #204d74;
+        }
+
+        .btn-primary button {
+            color: #fff;
+        }
+
+        .btn_disabled button {
+            color: #a5a6aa;
+        }
+
+        .btn_disabled,
+        .btn_disabled:hover {
+            border-color: #dadbe0;
+        }
+    </style>
+</head>
+
+<body class="zh_CN weui-desktop-page_simple page_appmsg_new edit_fixed" style="overflow: auto;min-width: 100%;">
+    <div class="align_edge audio_dialog js_audio_music_dialog ui-draggable" style="width:100%;">
+        <div class="dialog">
+            <div class="">
+                <div id="audio_music_dialog_content" class="audio_music_dialog_content">
+                    <!-- <div class="weui-desktop-tab weui-desktop-tab_title weui-desktop-tab_dialog title_tab">
+                        <ul class="weui-desktop-tab__navs">
+                            <li class="js_audio_tab_btn weui-desktop-tab__nav first js_top selected">
+                                <a href="javascript:;">素材库</a>
+                            </li>
+                            <li class="js_music_tab_btn weui-desktop-tab__nav first js_top">
+                                <a href="javascript:;">音乐</a>
+                            </li>
+                        </ul>
+                    </div> -->
+                    <div>
+
+                        <div class="js_audio_block audio_box" >
+
+                            <div class="global_mod audio_box_hd float_layout gap_top" id="">
+                                <p class="global_info gap_top_item tips_global jsAudioTips" style="display:none;">由于版本兼容的原因,你暂时只可以选择60秒内的语音发送</p>
+                                <p class="global_extra">
+                                    <div class="upload_box  align_right" style="float:right;">
+                                        <span class="upload_area webuploader-container">
+                                            <a id="js_imageuploa" class="btn btn-primary btn_add jsPluginAudioNew" data-groupid="">
+                                                <i class="icon14_common add_white"></i><%= lang.upload_audio %></a>
+                                            <ul class="upload_file_box" style="display:none"></ul>
+                                            <div id="rt_rt_1c1s401ur1rvo5oacbl14f81tk6m" style="position: absolute; top: 0px; left: 0px; width: 106px; height: 32px; overflow: hidden; bottom: auto; right: auto;">
+                                                <input id="uploadaudio" type="file" accept="audio/basic,audio/x-aiff,audio/x-mpeg,audio/x-pn/realaudio,audio/x-waw" style="display: none;">
+                                                <label for="uploadaudio" style="opacity: 0; width: 100%; height: 100%; display: block; cursor: pointer; background: rgb(255, 255, 255);"></label>
+                                            </div>
+                                        </span>
+                                    </div>
+                                </p>
+                            </div>
+                            <div class="audio_box_bd audio_list_container" id="">
+                                <audio src="" id="playaudio" type></audio>
+                                <div class="media_list_tips_wrp tips_global" style="display:none;">
+                                    <span class="tips"><%= lang.no_material %></span>
+                                    <span class="vm_box"></span>
+                                </div>
+                                <div class="media_list_tips_wrp" style="display:none;">
+                                    <i class="icon_loading_small white">loading...</i>
+                                    <span class="vm_box"></span>
+                                </div>
+                                <div class="audio_list jsPluginAudioList">
+                                    <!-- 音频列表 -->
+
+                                </div>
+
+                                <div class="pagination_wrp jsPluginAudioPage" style="display: none;">
+                                    <div class="pagination" id="">
+                                        <span class="page_nav_area">
+                                            <a href="javascript:void(0);" class="btn page_first"><%= lang.page_first %></a>
+                                            <a href="javascript:void(0);" class="btn page_prev" style="display: none;">
+                                                <i class="arrow"></i>
+                                            </a>
+
+                                            <span class="page_num">
+                                                <label>1</label>
+                                                <span class="num_gap">/</span>
+                                                <label>1</label>
+                                            </span>
+
+                                            <a href="javascript:void(0);" class="btn page_next" style="display: none;">
+                                                <i class="arrow"></i>
+                                            </a>
+                                            <a href="javascript:void(0);" class="btn page_last"><%= lang.page_last %></a>
+                                        </span>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="dialog_ft">
+
+
+                <span class="btn btn-primary btn_input js_btn_p btn_disabled">
+                    <button type="button" class="js_btn" data-index="0" id="submitAudioUrl" disabled><%= lang.ok %></button>
+                    <input type="hidden" id="selectedAuidoUrl" name="selectedAuidoUrl" value="">
+                </span>
+
+                <span class=" btn btn_default btn_input js_btn_p">
+                    <button type="button" class="js_btn" data-index="1" id="cancelaudiolib"><%= lang.cancel %></button>
+                </span>
+
+                <!-- <span class=" btn btn_default btn_input js_btn_p">
+                    <button type="button" class="js_btn" data-index="1" id="testtest">取消</button>
+                </span> -->
+            </div>
+
+        </div>
+    </div>
+
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script>
+        var hostoutprefix = window.location.protocol + '//' + window.location.host +'/storage';
+
+        $(function () {                                                     //附件页每隐藏一次 ifream都会重新加载一次
+            $("#cancelaudiolib").click(function () {
+                var _iframeparent = window.parent;
+                _iframeparent.AudioModalIO("hide");
+            })
+
+            window.parent.audiomodalhide(undefined, audiohideprocess);      //音频库模态框隐藏时执行的事件
+
+            window.parent.audiomodalshow(undefined, getaudiolist);          //音频库模态框显示时执行的事件（显示音频列表）
+
+
+            autoAudioMoadlHeight();                               //根据窗口状态，设置音频模态框大小（图片、音频库都是在点击附件时才载入）
+
+            $("#submitAudioUrl").click(function () {              //将音频数据传输至attachment页面
+                var data = {};
+                var curchecked = $('.jsPluginAudioList input[name="audiolist"]:checked');
+                data.id = curchecked.attr('data-id');
+                data.mimetype = curchecked.attr('data-mimetype');
+                data.newName = curchecked.attr('data-label');
+                data.fileUrl = curchecked.attr('data-fileUrl');
+                data.duration = curchecked.prev().find(".audio_length").text();
+                var _iframeparent = window.parent;
+                _iframeparent.document.getElementById('tour_attachment').contentWindow.AudioAreaShowData(data)         //将数据传输到attachment页面
+                _iframeparent.AudioModalIO("hide");
+            })
+
+
+
+            $("#uploadaudio").on("change", function () {       //上传音频文件到storage库
+                var fileObj = $("#uploadaudio")[0].files;
+                if (fileObj.length == 0) return
+                var formFile = new FormData();
+                for (var i = 0; i < fileObj.length; i++) {
+                    formFile.append("files", fileObj[i]);
+                }
+
+                var _iframe = window.parent;
+                $.ajax({
+                    url: "../file/upload",
+                    data: formFile,
+                    type: "post",
+                    dataType: "json",
+                    cache: false,               //上传文件无需缓存
+                    processData: false,         //用于对data参数进行序列化处理 这里必须false
+                    contentType: false,         //必须  
+                    success: function (result) {
+                        var files = result.files;
+                        var repeatfilename = '';
+                        for (var i = 0; i < files.length; i++) {
+                            if (files[i].repetition) repeatfilename += files[i].newName;
+                        }
+                        if (repeatfilename != "") _iframe.SucErrinfo("3", repeatfilename);  //音频库文件是否存在
+                        getaudiolist()                                                      //刷新音频显示列表
+                        $("#playaudio")[0].pause();                                         //停止音频播放
+                        $("#submitAudioUrl").attr("disabled", "disabled");                  //将确定按钮残废
+                        $("#submitAudioUrl").parent().addClass("btn_disabled");
+                        // console.log("音频响应suc！")
+                    },
+                    error: function (data, status) {
+                        if (status == 'error') {
+                            // console.log("响应失败！")
+                            window.parent.SucErrinfo("0","上传失败,请稍后再试！");
+                        }
+                    }
+                })
+
+            })
+
+            // $("#testtest").click(function () {
+            //     var ccc = document.getElementById("audio_tag0").duration;
+            //     console.log("ccc！", ccc);
+            // })
+
+        })
+
+        function autoAudioMoadlHeight() {                     //根据窗口状态，设置音频模态框大小
+            var audioIfraemheight = $('#tour_audioslibrary', window.parent.document).attr("height");
+            if (audioIfraemheight > 561) {
+                $(".audio_music_dialog_content").removeClass("small");
+                $(".audio_dialog .audio_list_container .audio_list").removeClass("small");
+            } else {
+                $(".audio_music_dialog_content").addClass("small");
+                $(".audio_dialog .audio_list_container .audio_list").addClass("small");
+            }
+        }
+
+        function audiohideprocess(data) {
+            console.log("音频库模态框隐藏时执行的事件");
+            $("#selectedAuidoUrl").val("");                         //保存地址清空（选中状态清除）
+            $("#playaudio")[0].pause();                             //停止音频播放
+            $(".jsPluginAudioList label").removeClass("selected")   //清空选中状态（重新填充audio列表时会有选中残留时间）
+            $("#submitAudioUrl").attr("disabled", "disabled");      //将确定按钮残废
+            $("#submitAudioUrl").parent().addClass("btn_disabled");
+        }
+
+        function getaudiolist(starindex) {                          //获取音频list
+            $.ajax({
+                url: '../file/list',
+                type: 'GET',
+                data: { mimeType: 'audio', order: "DESC", orderBy: "time" , tour_lib: "1"},
+                success: function (data) {
+                    console.log("返回的audio文件列表：", data);
+                    var files = data.data[0];
+
+                    if(data.data[1].total == 0){                    //没有audio文件
+                        $(".audio_list_container .jsPluginAudioList").html('<div class="media_list_tips_wrp tips_global">'+
+                                    '<span class="tips"><%= lang.no_material %></span>'+
+                                    '<span class="vm_box"></span></div>');
+                        return
+                    }
+
+                    var audiolist = '';
+                    for (var i = 0; i < files.length; i++) {
+                        var audiourl = hostoutprefix + files[i].fileUrl;
+
+
+                        audiolist += '<label class="frm_radio_label audio_item" for="checkbox' + i + '">' +
+                            '<i class="icon_radio"></i>' +
+                            '<span class="lbl_content">' +
+                            '<span class="audio_meta audio_title" title='+  files[i].newName  +'>' + files[i].newName + '</span>' +
+                            '<span class="audio_meta audio_date">' + files[i].time.substring(0, 10) + '</span>' +
+                            '<span class="audio_meta audio_length"></span>' +                           //AUDIO时长需解析文件获取时长
+                            '<span class="audio_meta audio_play jsPluginAudioPlay audio_default " id="pluginAudioPlay_' + i + '">' +
+                            '<div class="qqmusic_audio " id="AudioBox" data-aid="">' +
+                            '<a class="audio_switch" data-mimetype='+ files[i].mimetype +'  data-audiosrc="' + audiourl + '" href="javascript:;" onclick="return false;" title="点击播放"><i class="icon_qqmusic"></i></a>' +
+                            '</div></span></span>' +
+                            '<input name="audiolist" type="radio" data-fileUrl="' + files[i].fileUrl + '" data-mimetype="' + files[i].mimetype + '" data-label="' + files[i].newName + ' " data-id="' + files[i].id + '"' +
+                            'data-index="' + i + '" class="frm_radio jsPluginAudioRadio js_audio_music_item_radio" id="checkbox' + i + '"></label>'
+                    }
+                    $(".audio_list_container .jsPluginAudioList").html(audiolist);                      //监听动态添加的元素，需在元素添加后绑定事件
+
+                    $(".audio_list_container .jsPluginAudioList :radio").on("click", function (e) {     //阻止Input冒泡事件
+                        // console.log("inpuy单选被触发");
+
+                        e.stopPropagation();
+                    })
+
+
+                    $(".audio_list_container .jsPluginAudioList").on("click", "label", function () {    //单选状态
+                        // console.log("音频label标签触发")
+                    })
+
+                    $(".jsPluginAudioList .audio_switch").on("click", function (e) {                    //阻止播放音频按钮的冒泡事件（radio选中事件）
+                        e.stopPropagation();
+                        
+                        var _iframe = window.parent;
+                        var curpalyaudiosrc = $("#playaudio").attr("src");
+
+                        var audiosrc = $(this).attr("data-audiosrc");
+                        var audiotype = $(this).attr("data-mimetype");
+                        if (curpalyaudiosrc == audiosrc) {                                              //点击了已选择过的音频时
+                            if ($("#playaudio")[0].paused) {                                            //JQ对象转换为JS对象，（暂停状态）
+                                $("#playaudio")[0].play();
+                                $(this).parent().parent().addClass("AudioPlaying");
+                            } else {
+                                $("#playaudio")[0].pause();
+                                $(this).parent().parent().removeClass("AudioPlaying");
+                            }
+                        } else {
+                            $("#playaudio").attr("src", audiosrc);
+                            if ($("#playaudio")[0].canPlayType(audiotype) == "probably") {                             //浏览器是否支持当前的音频格式
+                                $("#playaudio")[0].play();
+                                $(this).parent().parent().addClass("AudioPlaying");                                    //添加播放效果
+                                var ccc = $(this).parents("label").siblings()
+                                $(this).parents("label").siblings().find(".audio_play").removeClass("AudioPlaying")    //兄弟元素删除播放效果
+                            } else {
+                                $("#playaudio").attr("src", "");                                                       //清空audio的src
+                                _iframe.SucErrinfo("3", "您的浏览器不支持" + audiotype + "格式的音频播放！");
+                            }
+                        }
+                    })
+
+                    $(".audio_list_container .jsPluginAudioList input").change(function () {                           //监视input checked的触发
+                        $(":checked").parent().addClass("selected").siblings().removeClass("selected");
+                        $("#submitAudioUrl").removeAttr("disabled");
+                        $("#submitAudioUrl").parent().removeClass("btn_disabled");
+                    })
+
+                    $(".audio_list_container .jsPluginAudioList a").each(function () {              //获取audio文件时长
+                        var curaudioUrl = $(this).attr("data-audiosrc");
+                        var audio = new Audio(curaudioUrl);
+
+                        var that = $(this);
+                        audio.addEventListener("canplaythrough", function () {
+                            var tlentotalS = audio.duration;                                            //总秒数
+                            console.log("音频载入",tlentotalS)
+                            var tlenM = Math.floor(tlentotalS / 60);
+                            tlenM < 10 ? tlenM = "0" + tlenM : tlenM;
+                            var tlenSdeci = (tlentotalS - Math.floor(tlentotalS / 60) * 60);            //带小数点     
+                            var tlenS = Math.floor(tlenSdeci);
+                            tlenS < 10 ? tlenS = "0" + tlenS : tlenS;
+                            var tlenMS = tlenM + ':' + tlenS;                                           //分：秒
+                            that.parent().parent().prev().html(tlenMS);
+                            audio = null
+                        }, false)
+
+                    })
+
+                },
+                error: function (err, status) {
+                    window.parent.SucErrinfo("0","文件列表返回错误："+ err);
+                }
+            })
+        }
+
+    </script>
+</body>
+
+</html>

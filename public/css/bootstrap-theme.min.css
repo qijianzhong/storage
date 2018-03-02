@@ -1,0 +1,9 @@
+@font-face {
+    font-family:'Montserrat';
+    src: url(../fonts/Montserrat-Regular.eot?#iefix) format('eot'),
+         url(../fonts/Montserrat-Regular.woff2) format('woff2'),
+         url(../fonts/Montserrat-Regular.woff) format('woff');
+}
+body {
+	font-family: Montserrat, "STHeiti", "Microsoft Yahei", Verdana, Simsun, "Segoe UI", "Segoe UI Web Regular", "Segoe UI Symbol", "Helvetica Neue", "BBAlpha Sans", "S60 Sans", Arial, "sans-serif";
+}

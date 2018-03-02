@@ -1,0 +1,134 @@
+html{height:100%}
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width:100%;
+  background:#e6e8ea;
+  color: #4c4f53!important; 
+}
+.content{height:100%;width:100%;}
+.main {  	
+  height:100%;
+  background:#e6e8ea;
+  padding: 0px 0px 0px 240px;
+}
+/* Sidebar
+=================================================================== */
+.sidebar {
+  background: #25313B;  
+  color: #ccc;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 240px;
+  z-index: 12;
+}
+.sidebar a {
+  color: #aaa;
+}
+
+.sidebar .sidebar-menu {
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 257px;
+}
+
+.sidebar .sidebar-collapse {
+  margin-right: -17px;
+  /*height: calc(100% - 70px);*/
+}
+
+.sidebar ul.nav.nav-sidebar {
+  margin: 0 10px;
+  width: 220px;
+  padding: 5px 0;
+}
+
+.sidebar ul.nav.nav-sidebar li {
+  margin: 5px 0;
+  border-top: 1px solid transparent;
+  position: relative;
+}
+
+.sidebar ul.nav.nav-sidebar li a {
+  padding: 10px 8px;
+  font-size: 15px;
+  line-height: 1.43;
+  font-weight: 200;
+}
+.sidebar ul.nav.nav-sidebar li a i.fa {
+  color: #aaa;
+  display: inline-block;
+  font-size: 20px;
+  height: 20px;
+  line-height: 20px;
+  margin: 0 8px 0 0;
+  text-align: center;
+  vertical-align: middle;
+  width: 30px;
+}
+.sidebar ul.nav.nav-sidebar li a span.text {
+  display:inline-block;
+  height: 20px;
+  line-height:20px;
+  vertical-align:middle;
+}
+.sidebar ul.nav.nav-sidebar li a span.fa {
+  position: absolute;
+  top: 32%;
+  right: 8%;
+}
+
+.sidebar ul.nav.nav-sidebar li.active>a {
+  background: #25313B; 
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 600;
+}
+.sidebar ul.nav.nav-sidebar li.active>a .fa {
+  color: #fff;
+}
+.sidebar ul.nav.nav-sidebar li a:hover {
+  background: rgba(255, 255, 255, 0.13);
+  opacity: 1;
+  border-radius: 8px;
+}
+.sidebar ul.nav.nav-sidebar li ul {
+  display: none;
+  background: #25313B;
+  list-style: none;
+  padding: 5px 0;
+}
+.sidebar ul.nav.nav-sidebar li ul li {
+  margin: 5px 0;
+}
+.sidebar ul.nav.nav-sidebar li ul li a {
+  padding-left: 35px;
+}
+.sidebar ul.nav.nav-sidebar li ul li ul li a  {
+  padding-left: 55px;
+}
+
+body.sidebar-hide .navbar {
+  padding: 0;
+}
+body.sidebar-hide .navbar .navbar-actions {
+  margin-left: -15px;
+}
+body.sidebar-hide .main {
+  width: 100%;
+  padding: 90px 30px 0 30px;
+  margin: 0;
+}
+body.sidebar-hide footer {
+  padding: 0 20px;
+}
+body.sidebar-hide #usage {
+  padding: 0;
+}
+body.sidebar-hide .sidebar {
+  display: none !important;
+}
+  

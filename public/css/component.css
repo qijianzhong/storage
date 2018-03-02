@@ -1,0 +1,405 @@
+@font-face {
+	font-family: 'fontawesome';
+	src:url('../fonts/fontawesome-webfont.eot');
+	src:url('../fonts/fontawesome-webfont.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/fontawesome-webfont.woff') format('woff'),
+		url('../fonts/fontawesome-webfont.ttf') format('truetype'),
+		url('../fonts/fontawesome-webfont.svg#fontawesome') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.list{
+	width: 100%;
+    padding: 20px;
+    height: calc(100% - 104px);
+}
+
+.cbp-vm-switcher{height:100%}
+
+/* General style of switch items' list */
+
+.cbp-vm-switcher .list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+
+}
+
+/* Clear eventual floats */
+.cbp-vm-switcher .list:before, 
+.cbp-vm-switcher .list:after { 
+	content: " "; 
+	display: table; 
+}
+
+.cbp-vm-switcher .list:after { 
+	clear: both; 
+}
+
+.cbp-vm-switcher .list li {
+	display: block;
+	position: relative;
+}
+
+.cbp-vm-image {
+	height: 160px;
+	width: 190px;
+	outline:none!important;
+    position: relative;
+    text-align: center;
+    vertical-align: middle;
+    display: table-cell;
+}
+
+.cbp-vm-image img {
+	cursor: pointer;
+    max-width: 148px;
+    max-height: 148px;
+}
+
+.cbp-vm-image video {
+	cursor: pointer;
+    max-width: 148px;
+    max-height: 148px;
+}
+
+.cbp-vm-title {
+	margin: 0;
+	padding: 0;
+}
+
+.cbp-vm-price {
+	color: #333;
+}
+
+.cbp-vm-view-grid .cbp-vm-add , .cbp-vm-view-grid .cbp-vm-download {
+	display:none;
+}
+.cbp-vm-view-grid .cbp-vm-add , .cbp-vm-view-grid .cbp-vm-edit {
+	display:none;
+}
+
+.cbp-vm-view-grid .thead{display:none}
+
+.cbp-vm-view-grid #listNew li:hover .cbp-vm-add{
+	padding:0px;
+	display:block;
+	position: absolute;
+	border-radius:50%;
+	bottom:10px;
+	right:10px;
+	height: 30px;
+	width:30px;
+	line-height: 30px;
+	text-align: center;
+	color: #fff;
+	background: #47a3da;
+}
+
+.cbp-vm-view-grid .cbp-vm-add:hover{
+	background: #02639d
+}
+
+
+
+.cbp-vm-view-grid #listNew li:hover .cbp-vm-down{
+	padding:0px;
+	display:block;
+	position: absolute;
+	border-radius:50%;
+	bottom:10px;
+	right:50px;
+	height: 30px;
+	width:30px;
+	line-height: 30px;
+	text-align: center;
+	color: #fff;
+	background: #428bca;
+}
+
+.cbp-vm-view-list .cbp-vm-add{
+	color: #fff;
+	background: #fd3838;
+	transition: background 0.2s;}
+
+.cbp-vm-view-list .cbp-vm-download{
+	color: #fff;
+	background: #2ea7e0;
+	transition: background 0.2s;}
+
+.cbp-vm-view-list .cbp-vm-edit{
+	color: #fff;
+	background: #036eb8;
+	transition: background 0.2s;}
+
+.cbp-vm-add:hover {
+	color: #fff;
+	background: #C61E1E;
+}
+
+.cbp-vm-download:hover {
+	color: #fff;
+	background: #076491;
+}
+
+.cbp-vm-edit:hover {
+	color: #fff;
+	background: #00528C;
+}
+
+
+.cbp-vm-add:before {
+	margin-right: 5px;
+}
+
+
+/* Individual view mode styles */
+
+/* Large grid view */
+.cbp-vm-view-grid .list {
+	text-align: center;
+	padding: 20px;
+}
+
+.cbp-vm-view-grid .list li {
+	float: left;
+    width: 190px;
+	height: 210px;
+	margin-bottom:10px;
+    background: #fff;
+    border: 1px solid #fff;
+}
+
+.cbp-vm-view-grid .list li:hover {
+	border: 1px solid #428bca;
+	border-radius: 5px;
+}
+
+.cbp-vm-view-grid .cbp-vm-title {
+	padding:5px;
+	height: 48px;
+	text-align: center;
+    word-break: break-all;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.cbp-vm-view-grid .cbp-vm-title span{
+   display:none
+}
+
+.cbp-vm-view-grid .cbp-vm-details {
+	display:none;
+} 
+
+.cbp-vm-view-grid .cbp-vm-price {
+	display:none;
+}
+
+.cbp-vm-view-grid .cbp-vm-author {
+	display:none;
+}
+
+.cbp-vm-view-grid .cbp-vm-checkbox {
+	display:none;
+}
+
+.cbp-vm-view-grid #url-list-box {
+	display:none;
+}
+
+/* List view */
+
+.cbp-vm-view-list #listNew{padding-top:40px}
+
+.cbp-vm-view-list .thead{
+	                      top:52px;
+	                      position:absolute;
+	                      display:block;
+						  width:100%;
+						  height: 40px;
+						  border-bottom:3px solid #EFF2F4;
+						 }
+
+.cbp-vm-view-list .thead ul{list-style: none;
+							margin:0; 
+							padding:0;
+							padding-left:20px;
+						}
+
+.cbp-vm-view-list .thead ul li{
+	list-style: none;
+	display:block;
+	height:40px;
+	float:left;
+	line-height:40px
+}
+
+.cbp-vm-view-list .thead ul li:hover{cursor:pointer;
+                                     color:#428bca}
+
+#th-li0{width:113px}
+#th-li1{width: calc(30%);padding-left: 30px;}
+#th-li2{width: calc(20% - 50px);padding-left: 30px;}
+#th-li3{width: calc(30% - 100px);padding-left: 30px;}
+#th-li4{width: calc(20%);padding-left: 30px;}
+
+.cbp-vm-view-list #listNew li {
+	padding-left:20px;
+	float: left;
+    width: 100%;
+    height: 60px;
+	border-top:1px solid #EFF2F4
+}
+
+.cbp-vm-view-list #listNew li:hover{background:#f0f8ff}
+
+.cbp-vm-view-list .cbp-vm-image,
+.cbp-vm-view-list .cbp-vm-title,
+.cbp-vm-view-list .cbp-vm-details,
+.cbp-vm-view-list .cbp-vm-price,
+.cbp-vm-view-list .cbp-vm-add {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.cbp-vm-view-list .cbp-vm-download {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.cbp-vm-view-list .cbp-vm-image {
+	display: block;
+	height: 50px;
+    margin-top: 5px;
+	width: 100px;
+    padding: 5px;
+    float: left;
+    position: relative;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.cbp-vm-view-list .cbp-vm-image img{
+	cursor: pointer;
+	height: 100%;
+	width: auto;
+	max-width:100%;
+}
+
+.cbp-vm-view-list .cbp-vm-image video{
+	cursor: pointer;
+	height: 100%;
+	width: auto;
+	max-width:100%;
+}
+
+.cbp-vm-view-list .cbp-vm-title {
+	position:relative;
+	float: left;
+	display: block;
+	font-size: 16px;
+	line-height:60px;
+	width: calc(30%);
+	padding-left:30px;
+	height:60px;
+	color:#333;
+    /* overflow: hidden;
+    text-overflow: ellipsis; */
+}
+
+.cbp-vm-view-list .cbp-vm-price {
+	float:left;
+	height:100%;
+	padding-left:30px;
+	line-height:60px;
+	width: calc(20% - 50px);
+	
+}
+
+.cbp-vm-view-list .cbp-vm-details {
+	float: left;
+	width: calc(30% - 100px);
+	line-height:60px;
+	padding-left:30px;
+	height:100%;
+	overflow: hidden;
+	white-space: normal;
+}
+
+.cbp-vm-view-list .cbp-vm-author {
+	float: left;
+	width: calc(20%);
+	line-height:60px;
+	padding-left:30px;
+	height:100%;
+	overflow: hidden;
+	white-space: normal;
+}
+
+.cbp-vm-view-list .cbp-vm-add {
+	position:absolute;
+	right:20px;
+	width:60px;
+	height:100%;
+	display:none;
+	border-radius:0px;
+	line-height:60px;
+	padding:0px;
+}
+
+.cbp-vm-view-list .cbp-vm-download {
+	position:absolute;
+	right:81px;
+	width:60px;
+	height:100%;
+	display:none;
+	border-radius:0px;
+	line-height:60px;
+	padding:0px;
+}
+
+.cbp-vm-view-list .cbp-vm-edit {
+	position:absolute;
+	right:142px;
+	width:60px;
+	height:100%;
+	display:none;
+	border-radius:0px;
+	line-height:60px;
+	padding:0px;
+}
+
+.cbp-vm-view-list #listNew li:hover .cbp-vm-add{display:block;}
+.cbp-vm-view-list #listNew li:hover .cbp-vm-download{display:block;}
+.cbp-vm-view-list #listNew li:hover .cbp-vm-edit{display:block;}
+
+.more{width:100%;
+	  height:30px;
+	  text-align:center;
+	  line-height:30px;
+	  clear: both;
+	}
+
+.more a{
+	padding:5px;
+	background-image:-webkit-linear-gradient(180deg, rgba(66, 139, 202, 0.42), rgba(255, 255, 255, 0.00)); 
+	background-image:linear-gradient(180deg,rgba(66, 139, 202, 0.42),rgba(255, 255, 255, 0));
+}
+
+
+.drap-box{
+	top:100px;
+	left:300px;
+}
+
+#url-list li{
+	overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#listNew > span{font-size:20px;line-height:40px;font-weight: 600}

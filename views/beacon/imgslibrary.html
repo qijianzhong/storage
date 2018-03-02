@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html style="overflow: auto;">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>tour img library</title>
+    <link rel="stylesheet" type="text/css" href="../css/attachment/base.css">
+    <link rel="stylesheet" type="text/css" href="../css/attachment/lib3a9ce3.css">
+    <link rel="stylesheet" href="../css/attachment/appmsg_new3a7b39.css" media="all">
+    <link rel="stylesheet" type="text/css" href="../css/attachment/tooltip3a7b39.css">
+    <link rel="stylesheet" type="text/css" href="../css/attachment/jquery.scrollbar3a7b39.css">
+    <link rel="stylesheet" type="text/css" href="../css/attachment/image_list3a7ad2.css">
+    <link rel="stylesheet" type="text/css" href="../css/attachment/weui-desktop_skin3a9ce3.css">
+
+
+
+
+    <style>
+        .icon_loading_small.white {
+            background: url('../css/attachment/icon40_loading_white3a7b38.gif');
+        }
+
+        .img_pick .img_item_bd.selected .selected_mask_icon {
+            background: url("../css/attachment/icon_card_selected3a7b38.png") no-repeat 0 0;
+            background-position: 50% 50%;
+            /* width: 165px;
+            height: 169px; */
+        }
+
+        .img_pick .img_item .pic {
+            height: 100%
+        }
+
+        .img_pick .img_item .pic {
+            border: 0;
+        }
+
+        .img_pick .img_item .pic_box {
+            border-bottom: 1px solid rgb(231, 231, 235);
+        }
+
+        /* .img_pick .img_item_bd.selected .selected_mask_icon {
+            width: 165px;
+            height: 169px;
+        } */
+
+        /* .img_crop_panel .group_list{
+            height: 547px;
+        }
+
+        .img_crop_panel .img_pick_area{
+            height: 547px;
+        }
+
+        .img_crop_panel .img_pick_area .img_pick_area_inner{
+            height: 494px;
+        }
+
+        .img_crop_panel .img_pick_area .img_pick{
+            height: 494px;
+        } */
+
+        /* .img_pick .img_item_bd.selected .selected_mask_inner {
+            width: 165px;
+            height: 169px;
+        }
+
+        .img_pick .img_item .lbl_content {
+            padding: 1px 9px;
+        }
+
+        .frm_checkbox_label.img_item_bd {
+            width: 164px;
+        }
+
+        .img_pick .img_item .pic_box {
+            width: 164px;
+            height: 168px;
+        } */
+
+        /* 更大的框架CSS =============================================================*/
+
+        /* .img_pick .img_item_bd.selected .selected_mask_icon.bigframe {
+            width: 165px;
+            height: 169px;
+        }
+
+        .img_pick .img_item_bd.selected .selected_mask_inner.bigframe {
+            width: 165px;
+            height: 169px;
+        }
+
+        .img_pick .img_item .pic.bigframe {
+            border: 0;
+        }
+
+        .img_pick .img_item .pic_box.bigframe {
+            border-bottom: 1px solid rgb(231, 231, 235);
+        }
+
+        .img_pick .img_item .lbl_content.bigframe {
+            padding: 1px 9px;
+        }
+
+        .img_pick .img_item .pic.bigframe {
+            height: 100%
+        } */
+
+        .img_pick .img_item_bd.selected .selected_mask_icon.bigframe {
+            width: 165px;
+            height: 169px;
+        }
+
+        .img_pick .img_item_bd.selected .selected_mask_inner.bigframe {
+            width: 165px;
+            height: 169px;
+        }
+
+        .img_pick .img_item .lbl_content.bigframe {
+            padding: 1px 9px;
+        }
+
+        .frm_checkbox_label.img_item_bd.bigframe {
+            width: 164px;
+        }
+
+        .img_pick .img_item .pic_box.bigframe {
+            width: 164px;
+            height: 168px;
+        }
+
+        .img_crop_panel .group_list.bigframe {
+            height: 547px;
+        }
+
+        .img_crop_panel .img_pick_area.bigframe {
+            height: 547px;
+        }
+
+        .img_crop_panel .img_pick_area .img_pick_area_inner.bigframe {
+            height: 494px;
+        }
+
+        .img_crop_panel .img_pick_area .img_pick.bigframe {
+            height: 434px;
+        }
+
+        /* 更大的框架CSS ===========================================================*/
+
+        .btn-primary {
+            color: #fff !important;
+            background-color: #337ab7;
+            border-color: #2e6da4;
+
+        }
+
+        .btn-primary:hover {
+            color: #fff;
+            background-color: #286090;
+            border-color: #204d74;
+        }
+
+        .btn-primary button {
+            color: #fff;
+        }
+
+        .btn_disabled button {
+            color: #a5a6aa;
+        }
+
+        .btn_disabled,
+        .btn_disabled:hover {
+            border-color: #dadbe0;
+        }
+
+        .img_dialog_wrp .pagination {
+            padding: 0 16px 0px;
+        }
+    </style>
+</head>
+
+<body class="zh_CN weui-desktop-page_simple page_appmsg_new edit_fixed" style="overflow: hidden;min-width: 100%;">
+    <div class=" img_dialog_wrp ui-draggable">
+        <div class="dialog">
+            <div class="dialog_bd">
+                <div>
+                    <div class="img_crop_panel" style="height: 100%;overflow: hidden;">
+                        <div class="js_select_frame img_pick_panel inner_container_box side_l cell_layout">
+                            <div class="inner_side">
+                                <div class="group_list">
+                                    <div class="inner_menu_box">
+                                        <dl class="inner_menu js_group">
+                                            <dd id="js_group0" class="inner_menu_item js_groupitem selected" data-groupid="0">
+                                                <a href="javascript:;" class="inner_menu_link" title="全部图片" onclick="return false">
+                                                    <strong>
+                                                        <%= lang.all_images %>
+                                                    </strong>
+                                                    <em class="num">(
+                                                        <span>0</span> )</em>
+                                                </a>
+                                            </dd>
+
+                                            <!-- <dd id="js_group1" class="inner_menu_item js_groupitem" data-groupid="1">
+                                                <a href="javascript:;" class="inner_menu_link" title="未分组" onclick="return false">
+                                                    <strong>未分组</strong>
+                                                    <em class="num">(
+                                                        <span>5</span>)</em>
+                                                </a>
+                                            </dd>
+
+                                            <dd id="js_group3" class="inner_menu_item js_groupitem" data-groupid="3">
+                                                <a href="javascript:;" class="inner_menu_link" title="文章配图" onclick="return false">
+                                                    <strong>文章配图</strong>
+                                                    <em class="num">(
+                                                        <span>10</span>)</em>
+                                                </a>
+                                            </dd> -->
+                                        </dl>
+                                        <!-- <div class="inner_menu_item">
+                                            <a href="javascript:;" class="inner_menu_link js_creategroup js_popover">
+                                                <i class="icon14_common add_gray">
+                                                    <%= lang.new_group %>
+                                                </i>
+                                                <%= lang.new_group %>
+                                            </a>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="inner_main">
+                                <div class="img_pick_area">
+                                    <div class="sub_title_bar in_dialog">
+                                        <div class="upload_box r align_right">
+                                            <span class="upload_area webuploader-container">
+                                                <a id="" class="btn btn-primary js_imageupload webuploader-pick" data-groupid="">
+                                                    <%= lang.upload_local %>
+                                                </a>
+                                                <ul class="upload_file_box" style="display:none"></ul>
+                                                <div id="rt_rt_1c1u1amhdn95170sr742c1jt64" style="position: absolute; top: 0px; left: 0px; width: 106px; height: 32px; overflow: hidden; bottom: auto; right: auto;">
+                                                    <input id="imglibupload" style="display: none;" multiple="multiple" accept="image/bmp,image/png,image/jpeg,image/jpg,image/gif"
+                                                        type="file">
+                                                    <label for="imglibupload" style="opacity: 0; width: 100%; height: 100%; display: block; cursor: pointer; background: rgb(255, 255, 255) none repeat scroll 0% 0%;"></label>
+                                                </div>
+                                            </span>
+                                        </div>
+                                        <!-- <div class="img_water_tips mini_tips icon_after r weak_text">
+                                            <span class="js_water">已开启图片水印</span>
+                                            <i class="js_water_tips icon_msg_mini ask"></i>
+                                        </div> -->
+                                    </div>
+                                    <div class="img_pick_area_inner">
+                                        <div class="img_pick">
+                                            <i class="icon_loading_small white js_loading" style="display: none;"></i>
+                                            <ul class="group js_list img_list" id="img_listUl">
+
+
+                                            </ul>
+                                        </div>
+                                        <div class="js_pagebar" style="display: none;">
+                                            <div class="pagination" id="">
+                                                <span class="page_nav_area">
+                                                    <a href="javascript:void(0);" class="btn page_first" style="display: none;"></a>
+                                                    <a href="javascript:void(0);" class="btn page_prev" style="display: none;">
+                                                        <i class="arrow"></i>
+                                                    </a>
+
+                                                    <span class="page_num">
+                                                        <label>1</label>
+                                                        <span class="num_gap">/</span>
+                                                        <label>1</label>
+                                                    </span>
+
+                                                    <a href="javascript:void(0);" class="btn page_next">
+                                                        <i class="arrow"></i>
+                                                    </a>
+                                                    <a href="javascript:void(0);" class="btn page_last" style="display: none;"></a>
+                                                </span>
+
+                                                <span class="goto_area">
+                                                    <input type="text">
+                                                    <a href="javascript:void(0);" class="btn page_go">
+                                                        <%= lang.page_go %>
+                                                    </a>
+                                                </span>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div></div>
+                </div>
+            </div>
+
+            <div class="dialog_ft">
+                <span class="btn btn_input js_btn_p btn-primary btn_disabled">
+                    <button type="button" class="js_btn" data-urlid='' data-index="0" disabled="disabled" id="AddAttachImgUrl">
+                        <%= lang.ok %>
+                    </button>
+                    <input type="hidden" id="selectedUrl" name="selectedUrl" data-imgsinfo="[]" value="">
+                </span>
+                <span class=" btn btn_default btn_input js_btn_p">
+                    <button type="button" class="js_btn" data-index="1" id="cancelimgslib">
+                        <%= lang.cancel %>
+                    </button>
+                </span>
+                <p class="dialog_ft_desc">
+                    <%= lang.selected %>
+                        <span class="js_selected">0</span>
+                        <%= lang._optional_100 %>
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script>
+        var hostoutprefix = window.location.protocol + '//' + window.location.host +'/storage';
+
+        $(function () {                                                   //附件页每隐藏一次 ifream都会重新加载一次
+
+            autoImgMoadlHeight()                                          //根据窗口状态，设置图片模态框大小（图片、音频库都是在点击附件时才载入）
+
+            window.parent.imgmodalshow(undefined, getimgslist);           //在图片库模态框被打开时获取图片并显示
+
+            window.parent.imgmodalhide();                                 //在图片库模态框被未完全隐藏前执行滚动条显示操作
+
+            $("#imglibupload").on("change", function () {                 //上传图片文件到storage库
+                var fileObj = $("#imglibupload")[0].files;
+                if (fileObj.length == 0) return
+                var formFile = new FormData();
+                for (var i = 0; i < fileObj.length; i++) {
+                    formFile.append("files", fileObj[i]);
+                }
+
+                var _iframe = window.parent;
+                $.ajax({
+                    url: "../file/upload",
+                    data: formFile,
+                    type: "post",
+                    dataType: "json",
+                    cache: false,               //上传文件无需缓存
+                    processData: false,         //用于对data参数进行序列化处理 这里必须false
+                    contentType: false,         //必须  result.files
+                    success: function (result) {
+                        console.log("图片上传完成后返回的数据：", result);
+                        var exiseDocname = [];
+                        var imgfiles = result.files;
+                        for (var i = 0; i < imgfiles.length; i++) {
+                            if (imgfiles[i].repetition) {
+                                exiseDocname.push(imgfiles[i].newName + "  ");
+                            }
+                        }
+                        if (exiseDocname.length != 0) _iframe.SucErrinfo("3", '选择了已有的附件图片：' + exiseDocname.join());
+                        getimgslist();
+
+                    },
+                    error: function (data, status) {
+                        if (status == 'error') {
+                            // console.log("响应失败！")
+                            window.parent.SucErrinfo("0", "上传失败,请稍后再试！");
+                        }
+                    }
+                })
+
+            })
+
+            $("#cancelimgslib").click(function () {                //关闭模态框
+                var _iframe = window.parent;
+                _iframe.modalIO("hide");
+            });
+
+            $(".js_pagebar .page_prev").click(function () {
+                var pageindexCur = $(".js_pagebar .page_num label:first").text();
+                var pageindexTotal = $(".js_pagebar .page_num label:last").text();
+                var numcur = parseInt(pageindexCur)
+                var status = getimgslist(numcur - 1);
+                if (status) {                                      //文件响应成功
+                    if (pageindexCur == pageindexTotal) {
+                        $(".js_pagebar .page_next").css("display", "inline-block")
+                    }
+                    if (numcur - 1 == "1") {
+                        $(".js_pagebar .page_prev").css("display", "none")
+                    }
+                }
+            })
+
+            $(".js_pagebar .page_next").click(function () {
+                var pageindexCur = $(".js_pagebar .page_num label:first").text();
+                var pageindexTotal = $(".js_pagebar .page_num label:last").text();
+                var numcur = parseInt(pageindexCur)
+                var status = getimgslist(numcur + 1);
+                if (status) {
+                    if (pageindexCur == "1") {
+                        $(".js_pagebar .btn.page_prev").css("display", "inline-block")
+                    }
+                    if (numcur + 1 == pageindexTotal) {
+                        $(".js_pagebar .btn.page_next").css("display", "none")
+                    }
+                }
+            })
+            $(".js_pagebar .page_go").click(function () {
+                var _iframe = window.parent;
+                var jumpnum = $(".js_pagebar .page_go").prev().val();
+
+                if (jumpnum == "" || !jumpnum) return
+                if (isNaN(jumpnum)) { _iframe.SucErrinfo("3", "只能输入数字"); return }
+
+                var pageindexTotal = $(".js_pagebar .page_num label:last").text();
+                if (jumpnum >= "1" && jumpnum <= pageindexTotal) {
+                    var status = getimgslist(jumpnum)
+                    if (status) {
+                        $(".js_pagebar .page_go").prev().val("");             //清空跳转输入
+                        if (jumpnum > "1" && jumpnum < pageindexTotal) {
+                            $(".js_pagebar .page_prev").css("display", "inline-block");
+                            $(".js_pagebar .page_next").css("display", "inline-block");
+                        }
+                        if (jumpnum == "1") {                                 //翻页按钮显示设置
+                            $(".js_pagebar .page_prev").css("display", "none")
+                            $(".js_pagebar .page_next").css("display", "inline-block")
+                        }
+                        if (jumpnum == pageindexTotal) {
+                            $(".js_pagebar .page_prev").css("display", "inline-block")
+                            $(".js_pagebar .page_next").css("display", "none")
+                        }
+                    }
+                } else {
+                    _iframe.SucErrinfo("3", "请输入正确的页数")
+                }
+
+
+                // console.log("跳转pageinput:", jumpnum)
+            })
+
+
+            $("#AddAttachImgUrl").click(function () {                   //确认查询图片信息并显示图片预览,防止文件名带有分隔符号
+                var seleArr = $("#selectedUrl").val().split(",");       //URL ID数组
+                var _iframe = window.parent;
+                $.ajax({
+                    url: '../file/filesinformation',
+                    type: 'GET',
+                    data: { filesId: seleArr },
+                    success: function (data) {
+                        console.log("文件信息请求成功！")
+                        _iframe.document.getElementById('tour_attachment').contentWindow.ImgAreaShowData(data.data);    //将数据传输到attachment页面
+                        _iframe.document.getElementById('tour_attachment').contentWindow.scrollrefreshbottom();         //#body¹ö¶¯Ìõµ½µ×²¿
+                        $("#selectedUrl").val("")                           //传递后清空存储的UrlId
+                        $("#img_listUl li>label").removeClass("selected")   //清除选中状态
+                        $(".dialog_ft .js_selected").text("0")              //重置选择个数
+                        checkImgUrl();                                      //检查确定按钮是否可用,将按钮残废
+                        _iframe.modalIO("hide");                            //隐藏图片库模态框
+                    },
+                    error: function (err, status) {
+                        _iframe.SucErrinfo("0", "图片添加请求失败，请稍后再试！")
+                    }
+                })
+
+
+            })
+
+
+            $("#img_listUl").on("click", "li", function () {
+                var lable = $(this).children()                              //labe标签
+                lable.toggleClass("selected");
+
+                var seleArr = $("#selectedUrl").val().split(",");           //idURL数组
+
+                var seleimginfo = $("#selectedUrl").attr("data-fileUrl");
+
+                if (lable.hasClass("selected")) {                           //被选中,增加存储的hashID
+                    seleArr[0] != "" ? seleArr[seleArr.length] = $(this).attr('data-fileUrl') : seleArr[seleArr.length - 1] = $(this).attr('data-fileUrl')
+                    var seleUrlString = seleArr.join();
+                    $("#selectedUrl").val(seleUrlString);
+
+
+                } else {                                                    //未被选中,删除存储的URL
+                    var unseledataid = $(this).attr('data-fileUrl');
+                    for (var i = seleArr.length - 1; i >= 0; i--) {
+                        if (seleArr[i] == unseledataid) {
+                            seleArr.splice(i, 1);
+                        }
+                    }
+                    var seleUrlString = seleArr.join();
+                    $("#selectedUrl").val(seleUrlString);
+
+                }
+
+                checkImgUrl();    //检查确定按钮是否可用
+
+                var NewestUrlArr = $("#selectedUrl").val().split(",")
+                var seleLength = NewestUrlArr.length == 1 && NewestUrlArr[0] == "" ? "0" : NewestUrlArr.length
+                $(".dialog_ft .js_selected").text(seleLength);              //显示已选多少个文件
+            })
+
+        })
+
+
+        function autoImgMoadlHeight() {                     //根据窗口状态，设置图片模态框大小
+            var ImgIfraemheight = $('#tour_imgslibrary', window.parent.document).attr("height");
+            if (ImgIfraemheight >= 648) {
+                $(".img_crop_panel .group_list").addClass("bigframe");
+                $(".img_crop_panel .img_pick_area").addClass("bigframe");
+                $(".img_crop_panel .img_pick_area .img_pick_area_inner").addClass("bigframe");
+                $(".img_crop_panel .img_pick_area .img_pick").addClass("bigframe");
+            } else {
+                $(".img_crop_panel .group_list").removeClass("bigframe");
+                $(".img_crop_panel .img_pick_area").removeClass("bigframe");
+                $(".img_crop_panel .img_pick_area .img_pick_area_inner").removeClass("bigframe");
+                $(".img_crop_panel .img_pick_area .img_pick").removeClass("bigframe");
+            }
+        }
+
+        function getimgslist(starindex) {                             //获取图片list
+            var ImgIfraemheight = $('#tour_imgslibrary', window.parent.document).attr("height");
+            var maxcount;
+            var statusbool;
+            ImgIfraemheight >= 648 ? maxcount = "8" : maxcount = "10"
+            $.ajax({
+                url: '../file/list',
+                type: 'GET',
+                async: false,
+                data: { startIndex: starindex || '1', maxResult: maxcount, mimeType: 'photo', order: "DESC", orderBy: "time", tour_lib: "1" },
+                success: function (data) {
+                    console.log("返回的文件列表：", data);
+                    var files = data.data[0];
+                    var pageinfo = data.data[1];
+
+                    if (pageinfo.total == 0) {                          //没有文件                   
+                        $("#img_listUl").html('<li class="empty_tips"><%= lang.the_group_no_picture_material %></li>');
+                        return
+                    }
+                    if (pageinfo.pagination > 1) {                      //如果总页数不止一页，pagebar显示
+                        $(".js_pagebar").css("display", "block")
+                        $(".js_pagebar .page_num label:first").text(starindex || "1");
+                        $(".js_pagebar .page_num label:last").text(pageinfo.pagination);
+                    }
+                    $('#js_group0 span').text(pageinfo.total);
+
+                    var imgslist = ""
+                    for (var i = 0; i < files.length; i++) {
+                        var imgsrc = hostoutprefix + files[i].fileUrl;
+                        imgslist += '<li class="img_item js_imageitem" data-id=' + files[i].id + ' data-newname="' + files[i].newName + '" data-fileUrl=' + files[i].fileUrl + ' data-format=' + files[i].mimetype + '>' +
+                            '<label class="frm_checkbox_label img_item_bd" >' +
+                            '<div class="pic_box" >' +
+                            '<img class="pic js_pic" src=' + imgsrc + ' style="width: 100%;">' +
+                            '</div>' +
+                            '<span class="lbl_content">' + files[i].newName + '</span>' +
+                            '<div class="selected_mask"><div class="selected_mask_inner"></div><div class="selected_mask_icon"></div></div>' +
+                            '</label></li>';
+                    }
+                    $("#img_listUl").html(imgslist);                    //显示预览图片
+
+                    if (ImgIfraemheight >= 648) {                       //根据图片框高度决定显示图片的大小
+                        $(".img_crop_panel .img_pick_area .selected_mask_inner").addClass("bigframe");
+                        $(".img_crop_panel .img_pick_area .selected_mask_icon").addClass("bigframe");
+                        $(".img_pick .img_item .lbl_content").addClass("bigframe");
+                        $(".frm_checkbox_label.img_item_bd").addClass("bigframe");
+                        $(".img_pick .img_item .pic_box").addClass("bigframe");
+                    } else {
+                        $(".img_crop_panel .img_pick_area .selected_mask_inner").removeClass("bigframe");
+                        $(".img_crop_panel .img_pick_area .selected_mask_icon").removeClass("bigframe");
+                        $(".img_pick .img_item .lbl_content").removeClass("bigframe");
+                        $(".frm_checkbox_label.img_item_bd").removeClass("bigframe");
+                        $(".img_pick .img_item .pic_box").removeClass("bigframe");
+                    }
+
+                    $("#img_listUl li").each(function () {              //检查此页图片的选中状态;
+                        var seleArr = $("#selectedUrl").val().split(",");
+                        if (!(seleArr.length == 1 && seleArr[0] == "")) {
+                            var curliUrlId = $(this).attr("data-fileUrl");
+                            for (var i = 0; i < seleArr.length; i++) {
+                                if (seleArr[i] == curliUrlId) {
+                                    var lable = $(this).children()      //labe标签
+                                    lable.addClass("selected");
+                                    break
+                                }
+                            }
+                        }
+                    })
+                    statusbool = true;
+                },
+                error: function (err, status) {
+                    window.parent.SucErrinfo("0", "文件列表获取错误,请稍后再试！");
+                    statusbool = false;
+                }
+            })
+            return statusbool
+        }
+
+        function checkImgUrl() {                                    //检查确定按钮是否可用
+            var NowSeleUrlString = $("#selectedUrl").val();         //检查是否有图片地址
+            if (NowSeleUrlString == "") {                           //确定按钮不可用
+                $("#AddAttachImgUrl").attr("disabled", "disabled");
+                $("#selectedUrl").parent().addClass("btn_disabled");
+            } else {                                                //确定按钮可用
+                $("#AddAttachImgUrl").removeAttr("disabled");
+                $("#selectedUrl").parent().removeClass("btn_disabled");
+            }
+        }
+    </script>
+</body>
+
+</html>
